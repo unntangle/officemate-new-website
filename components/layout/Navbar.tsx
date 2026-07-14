@@ -62,7 +62,7 @@ export function Navbar() {
     >
       <div
         className={cn(
-          "glass border border-line rounded-full max-w-6xl mx-auto px-6 h-14 md:h-16 md:px-8 flex items-center justify-between transition-all duration-300",
+          "glass border border-line rounded-full max-w-6xl mx-auto px-6 h-14 md:h-16 md:px-8 flex items-center justify-between transition-all duration-300 relative",
           scrolled ? "shadow-lift bg-white/95" : "shadow-soft bg-white/80"
         )}
       >
@@ -148,7 +148,7 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute right-0 top-full mt-3 w-56 overflow-hidden rounded-2xl border border-line glass shadow-lift"
+                  className="absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-line glass shadow-lift"
                   onMouseEnter={() => setMoreOpen(true)}
                 >
                   <div className="py-2">
@@ -157,11 +157,14 @@ export function Navbar() {
                         key={link.href}
                         href={link.href}
                         className={cn(
-                          "flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-surface hover:text-ink",
+                          "flex items-center px-5 py-2.5 text-sm font-medium transition-colors hover:text-ink group/more",
                           pathname === link.href ? "text-ink" : "text-ink/70"
                         )}
                       >
-                        {link.label}
+                        <span className="relative pb-0.5">
+                          {link.label}
+                          <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-accent transition-all duration-300 group-hover/more:w-full" />
+                        </span>
                       </Link>
                     ))}
                   </div>
@@ -182,7 +185,6 @@ export function Navbar() {
         >
           <Menu size={22} />
         </button>
-      </div>
 
       {/* Mega menu (Products) */}
       <AnimatePresence>
@@ -192,7 +194,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-0 right-0 mx-auto top-full mt-3 hidden md:block max-w-4xl w-full rounded-2xl border border-line glass shadow-lift"
+            className="absolute left-0 right-0 mx-auto top-full mt-2 hidden md:block max-w-4xl w-full rounded-2xl border border-line glass shadow-lift"
             onMouseEnter={() => setMegaOpen(true)}
           >
             <div className="px-8 py-7">
@@ -225,6 +227,7 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
 
       {/* Mobile drawer */}
       <AnimatePresence>
