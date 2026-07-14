@@ -77,7 +77,7 @@ export function Navbar() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 md:flex h-full">
           {primaryLinks.map((link) => {
             if (link.hasDropdown) {
               return (
@@ -118,7 +118,7 @@ export function Navbar() {
           })}
 
           {/* More dropdown trigger */}
-          <div ref={moreRef} className="relative">
+          <div ref={moreRef} className="relative h-full flex items-center">
             <button
               onMouseEnter={() => {
                 setMoreOpen(true);
@@ -148,7 +148,13 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-line glass shadow-lift"
+                  className="absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border shadow-lift"
+                  style={{
+                    background: "rgba(255, 255, 255, 0.35)",
+                    backdropFilter: "blur(24px) saturate(185%)",
+                    WebkitBackdropFilter: "blur(24px) saturate(185%)",
+                    borderColor: "rgba(255, 255, 255, 0.45)",
+                  }}
                   onMouseEnter={() => setMoreOpen(true)}
                 >
                   <div className="py-2">
@@ -194,7 +200,13 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-0 right-0 mx-auto top-full mt-2 hidden md:block max-w-4xl w-full rounded-2xl border border-line glass shadow-lift"
+            className="absolute left-0 right-0 mx-auto top-full mt-2 hidden md:block max-w-4xl w-full rounded-2xl border shadow-lift"
+            style={{
+              background: "rgba(255, 255, 255, 0.35)",
+              backdropFilter: "blur(24px) saturate(185%)",
+              WebkitBackdropFilter: "blur(24px) saturate(185%)",
+              borderColor: "rgba(255, 255, 255, 0.45)",
+            }}
             onMouseEnter={() => setMegaOpen(true)}
           >
             <div className="px-8 py-7">
