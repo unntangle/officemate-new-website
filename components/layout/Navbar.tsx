@@ -189,50 +189,33 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full hidden border-b border-line bg-white/95 backdrop-blur-xl md:block"
+            className="absolute inset-x-0 top-full hidden border-b border-line bg-white/97 backdrop-blur-xl md:block shadow-soft"
             onMouseEnter={() => setMegaOpen(true)}
           >
-            <div className="container grid grid-cols-[1.1fr_1.4fr] gap-10 py-8">
-              <div>
-                <p className="eyebrow mb-4">Browse by category</p>
-                <ul className="grid grid-cols-2 gap-x-6 gap-y-1">
-                  {CATEGORIES.map((cat) => (
-                    <li key={cat.slug}>
-                      <Link
-                        href={`/products?category=${cat.slug}`}
-                        className="group flex flex-col rounded-xl px-3 py-2.5 transition-colors hover:bg-surface"
-                      >
-                        <span className="flex items-center gap-1 text-sm font-medium text-ink">
-                          {cat.name}
-                          <ArrowUpRight
-                            size={13}
-                            className="opacity-0 transition-opacity group-hover:opacity-100"
-                          />
-                        </span>
-                        <span className="text-xs text-muted">{cat.tagline}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="eyebrow mb-4">Featured</p>
-                <div className="grid grid-cols-3 gap-4">
-                  {FEATURED.slice(0, 3).map((p) => (
+            <div className="container py-8">
+              <div className="grid grid-cols-4 gap-x-8 gap-y-6">
+                {CATEGORIES.map((cat) => (
+                  <div key={cat.slug}>
                     <Link
-                      key={p.slug}
-                      href={`/products/${p.slug}`}
-                      className="group rounded-2xl border border-line bg-surface/60 p-3 transition-all hover:border-ink/20 hover:shadow-soft"
+                      href={`/products?category=${cat.slug}`}
+                      className="text-sm font-semibold text-accent hover:underline"
                     >
-                      <div className="aspect-square overflow-hidden rounded-xl bg-white">
-                        <div className="transition-transform duration-500 group-hover:scale-105">
-                          <ProductRender category={p.category} color={p.swatch} />
-                        </div>
-                      </div>
-                      <p className="mt-2 text-xs font-medium text-ink">{p.name}</p>
+                      {cat.name}
                     </Link>
-                  ))}
-                </div>
+                    <ul className="mt-2 space-y-1.5 border-l border-line pl-3">
+                      {cat.subcategories?.map((sub) => (
+                        <li key={sub}>
+                          <Link
+                            href={`/products?category=${cat.slug}&sub=${encodeURIComponent(sub)}`}
+                            className="text-sm text-muted transition-colors hover:text-ink"
+                          >
+                            {sub}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
             </div>
           </motion.div>

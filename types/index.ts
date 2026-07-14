@@ -1,15 +1,18 @@
 export type CategorySlug =
   | "office-chairs"
-  | "ergonomic-chairs"
-  | "executive-chairs"
-  | "gaming-chairs"
-  | "standing-desks"
-  | "accessories";
+  | "office-tables"
+  | "work-stations"
+  | "soft-sofas"
+  | "leisure-lounges"
+  | "tele-pods"
+  | "work-wellness"
+  | "office-storage";
 
 export interface Category {
   slug: CategorySlug;
   name: string;
   tagline: string;
+  subcategories?: string[];
 }
 
 export interface SpecRow {

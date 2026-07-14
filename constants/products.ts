@@ -8,7 +8,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "Aeris Glide Ergo",
     slug: "glide-ergo",
-    category: "ergonomic-chairs",
+    category: "office-chairs",
     price: 24999,
     compareAtPrice: 32999,
     rating: 4.8,
@@ -211,7 +211,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "Aeris Flow Executive",
     slug: "flow-executive",
-    category: "executive-chairs",
+    category: "office-chairs",
     price: 38999,
     compareAtPrice: 46999,
     rating: 4.9,
@@ -307,7 +307,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "Aeris Pulse Gaming",
     slug: "pulse-gaming",
-    category: "gaming-chairs",
+    category: "leisure-lounges",
     price: 21999,
     compareAtPrice: 27999,
     rating: 4.6,
@@ -401,7 +401,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "Aeris Orbit Standing Desk",
     slug: "orbit-standing-desk",
-    category: "standing-desks",
+    category: "work-stations",
     price: 42999,
     compareAtPrice: 49999,
     rating: 4.8,
@@ -493,7 +493,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "Aeris Lumbar Cushion",
     slug: "lumbar-cushion",
-    category: "accessories",
+    category: "office-storage",
     price: 3499,
     compareAtPrice: 4499,
     rating: 4.5,

@@ -87,7 +87,7 @@ function renderSilhouette(category: CategorySlug, gid: string, variant: number) 
   const fill = `url(#${gid}-obj)`;
   const fill2 = `url(#${gid}-obj2)`;
 
-  if (category === "standing-desks") {
+  if (category === "work-stations") {
     return (
       <g>
         {/* desk top */}
@@ -105,7 +105,7 @@ function renderSilhouette(category: CategorySlug, gid: string, variant: number) 
     );
   }
 
-  if (category === "accessories") {
+  if (category === "office-storage") {
     return (
       <g>
         {/* lumbar cushion */}
@@ -131,8 +131,8 @@ function renderSilhouette(category: CategorySlug, gid: string, variant: number) 
     );
   }
 
-  // chair families (office / ergonomic / executive / gaming)
-  const gaming = category === "gaming-chairs";
+  // chair families — leisure-lounges uses the gaming/bolster silhouette
+  const gaming = category === "leisure-lounges";
   const backTop = gaming ? 150 : 176;
   const backWidth = gaming ? 176 : 150;
   return (
