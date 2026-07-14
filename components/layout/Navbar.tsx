@@ -52,10 +52,7 @@ export function Navbar() {
 
   return (
     <header
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
-        scrolled ? "py-3 md:py-4" : "py-0"
-      )}
+      className="sticky top-0 z-50 w-full py-4 px-4 md:px-6 bg-transparent"
       onMouseLeave={() => {
         setMegaOpen(false);
         setMoreOpen(false);
@@ -63,10 +60,8 @@ export function Navbar() {
     >
       <div
         className={cn(
-          "transition-all duration-300 flex items-center justify-between",
-          scrolled
-            ? "glass border border-line rounded-full shadow-soft max-w-6xl mx-auto px-6 h-14 md:h-16 md:px-8"
-            : "container border-b border-transparent h-16 md:h-[72px]"
+          "glass border border-line rounded-full max-w-6xl mx-auto px-6 h-14 md:h-16 md:px-8 flex items-center justify-between transition-all duration-300",
+          scrolled ? "shadow-lift bg-white/95" : "shadow-soft bg-white/80"
         )}
       >
         <Link href="/" className="flex items-center gap-2" aria-label={`${SITE.name} home`}>
