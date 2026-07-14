@@ -57,7 +57,7 @@ export function ClientsCarousel() {
                   src={`/images/clients/${logo}`}
                   alt={`${logo.replace(".png", "")} logo`}
                   fill
-                  className="object-contain opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                  className="object-contain"
                   sizes="(max-width: 768px) 112px, 144px"
                 />
               </div>
@@ -73,7 +73,7 @@ export function ClientsCarousel() {
                   src={`/images/clients/${logo}`}
                   alt={`${logo.replace(".png", "")} logo`}
                   fill
-                  className="object-contain opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                  className="object-contain"
                   sizes="(max-width: 768px) 112px, 144px"
                 />
               </div>

@@ -185,28 +185,6 @@ export function Hero() {
         </button>
       </div>
 
-      {/* Stats strip below hero */}
-      <motion.div
-        initial={reduce ? undefined : { opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: EASE, delay: 0.55 }}
-        className="border-b border-line bg-white"
-      >
-        <div className="container">
-          <dl className="grid grid-cols-3 divide-x divide-line py-5 md:py-6">
-            {[
-              { v: "12yr", l: "Warranty" },
-              { v: "120k+", l: "Customers seated" },
-              { v: "4.8★", l: "Average rating" },
-            ].map((s) => (
-              <div key={s.l} className="px-6 first:pl-0 last:pr-0 md:px-10">
-                <dt className="text-xl font-bold text-ink md:text-2xl">{s.v}</dt>
-                <dd className="mt-0.5 text-xs text-muted md:text-sm">{s.l}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </motion.div>
     </section>
   );
 }
