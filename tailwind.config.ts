@@ -69,7 +69,7 @@ const config: Config = {
       animation: {
         shimmer: "shimmer 1.6s infinite",
         marquee: "marquee 80s linear infinite",
-        "zoom-in-out": "zoom-in-out 20s ease-in-out infinite",
+        "zoom-in-out": "zoom-in-out 10s ease-in-out infinite",
       },
     },
   },
