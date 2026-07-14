@@ -1,16 +1,28 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { CATEGORIES } from "@/constants/categories";
-import { PRODUCTS } from "@/constants/products";
+import { FEATURED } from "@/constants/products";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Reveal } from "@/components/common/Reveal";
-import { ProductRender } from "@/components/common/ProductRender";
-import { stagger, fadeUp } from "@/lib/motion";
+import { ProductCard } from "@/components/products/ProductCard";
+
+const TABS_TO_SHOW = 6; // how many category tabs to display
 
 export function Categories() {
+  const [activeTab, setActiveTab] = useState(CATEGORIES[0].slug);
+
+  // Only show FEATURED products (real names + real photos) for the active tab.
+  // For tabs where no FEATURED product exists, the empty state is shown.
+  const filteredProducts = FEATURED.filter((p) => p.category === activeTab);
+
   return (
-    <section className="section">
+    <section className="pt-10 pb-20 md:pt-12 md:pb-28 lg:pt-14 lg:pb-32">
       <div className="container">
+        {/* Header row */}
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             eyebrow="Shop by category"
@@ -30,46 +42,74 @@ export function Categories() {
           </Reveal>
         </div>
 
-        <Reveal
-          variants={stagger(0.06)}
-          className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3"
-        >
-          {CATEGORIES.map((cat) => {
-            const sample = PRODUCTS.find((p) => p.category === cat.slug);
-            return (
-              <Reveal key={cat.slug} variants={fadeUp}>
+        {/* Tab underlines */}
+        <div className="mt-8 flex border-b border-line">
+          {CATEGORIES.slice(0, TABS_TO_SHOW).map((cat) => (
+            <button
+              key={cat.slug}
+              onClick={() => setActiveTab(cat.slug)}
+              className={`relative flex-1 pb-3 pt-1 text-center text-sm font-medium transition-colors duration-200 ${
+                activeTab === cat.slug
+                  ? "text-ink"
+                  : "text-muted hover:text-ink"
+              }`}
+            >
+              {cat.name}
+              {activeTab === cat.slug && (
+                <motion.span
+                  layoutId="tab-underline"
+                  className="absolute bottom-0 left-0 h-0.5 w-full bg-accent"
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Product grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 grid grid-cols-2 gap-4 pb-4 md:grid-cols-3 lg:grid-cols-4"
+          >
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <ProductCard key={product.slug} product={product} />
+              ))
+            ) : (
+              <div className="col-span-full flex flex-col items-center justify-center py-16 text-center text-muted">
+                <p className="text-base">No products in this category yet.</p>
                 <Link
-                  href={`/products?category=${cat.slug}`}
-                  className="group flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-line bg-card p-5 transition-all duration-300 hover:border-ink/15 hover:shadow-lift"
+                  href="/products"
+                  className="mt-3 text-sm font-medium text-accent underline-offset-4 hover:underline"
                 >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="display text-lg font-semibold">{cat.name}</h3>
-                      <p className="mt-1 max-w-[16ch] text-sm text-muted">
-                        {cat.tagline}
-                      </p>
-                    </div>
-                    <ArrowUpRight
-                      size={18}
-                      className="text-muted transition-all group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </div>
-                  <div className="mt-6 h-28 self-end">
-                    {sample && (
-                      <div className="h-full transition-transform duration-500 group-hover:scale-105">
-                        <ProductRender
-                          category={cat.slug}
-                          color={sample.swatch}
-                          className="h-28 w-auto"
-                        />
-                      </div>
-                    )}
-                  </div>
+                  Browse all products
                 </Link>
-              </Reveal>
-            );
-          })}
-        </Reveal>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* "See all in category" link */}
+        {filteredProducts.length > 0 && (
+          <div className="mt-6 text-center">
+            <Link
+              href={`/products?category=${activeTab}`}
+              className="group inline-flex items-center gap-1.5 rounded-full border border-line bg-card px-5 py-2 text-sm font-medium text-ink transition-all hover:border-accent hover:text-accent"
+            >
+              See all{" "}
+              {CATEGORIES.find((c) => c.slug === activeTab)?.name}
+              <ArrowUpRight
+                size={15}
+                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

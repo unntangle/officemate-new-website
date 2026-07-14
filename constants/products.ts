@@ -664,7 +664,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "Jupiter",
     slug: "jupiter",
-    category: "work-stations",
+    category: "office-chairs",
     price: 54999,
     compareAtPrice: 64999,
     rating: 4.8,
@@ -758,7 +758,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "Webstar",
     slug: "webstar",
-    category: "office-tables",
+    category: "office-chairs",
     price: 67999,
     compareAtPrice: 79999,
     rating: 4.6,
@@ -946,7 +946,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "Altura",
     slug: "altura",
-    category: "work-stations",
+    category: "office-chairs",
     price: 36999,
     compareAtPrice: 44999,
     rating: 4.9,

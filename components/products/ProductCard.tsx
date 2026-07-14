@@ -33,6 +33,7 @@ export function ProductCard({ product }: { product: Product }) {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-card transition-all duration-300 hover:border-ink/15 hover:shadow-lift"
     >
+      {/* Square image area */}
       <Link
         href={`/products/${product.slug}`}
         className="relative block aspect-square overflow-hidden bg-surface"
@@ -56,7 +57,10 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
       </Link>
 
+      {/* Text content */}
       <div className="flex flex-1 flex-col p-5">
+        {/* Short red accent separator */}
+        <div className="mb-3 h-0.5 w-8 bg-accent" />
         <span className="eyebrow">{categoryName(product.category)}</span>
         <Link href={`/products/${product.slug}`} className="mt-2">
           <h3 className="display text-lg font-semibold leading-tight transition-colors group-hover:text-accent">
