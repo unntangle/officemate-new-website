@@ -65,7 +65,7 @@ export function Hero() {
       {/* Full-bleed hero slider */}
       <div
         className="relative w-full overflow-hidden"
-        style={{ aspectRatio: "16/7", minHeight: "420px" }}
+        style={{ height: "100dvh", minHeight: "560px" }}
       >
         <AnimatePresence initial={false} custom={direction} mode="sync">
           <motion.div
