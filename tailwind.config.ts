@@ -61,10 +61,15 @@ const config: Config = {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
         },
+        "zoom-in-out": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.1)" },
+        },
       },
       animation: {
         shimmer: "shimmer 1.6s infinite",
         marquee: "marquee 80s linear infinite",
+        "zoom-in-out": "zoom-in-out 20s ease-in-out infinite",
       },
     },
   },

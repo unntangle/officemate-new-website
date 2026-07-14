@@ -83,7 +83,7 @@ export function Hero() {
               alt={slide.alt}
               fill
               priority={index === 0}
-              className="object-cover object-center"
+              className="object-cover object-center animate-zoom-in-out"
               sizes="100vw"
             />
           </motion.div>
