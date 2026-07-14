@@ -201,19 +201,19 @@ export function Navbar() {
                   <div key={cat.slug}>
                     <Link
                       href={`/products?category=${cat.slug}`}
-                      className="relative text-sm font-semibold text-accent group/title inline-block pb-1"
+                      className="text-sm font-semibold text-accent"
                     >
                       {cat.name}
-                      <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-accent transition-all duration-300 group-hover/title:w-full" />
                     </Link>
                     <ul className="mt-2 space-y-1.5 border-l-2 border-line pl-3">
                       {cat.subcategories?.map((sub) => (
                         <li key={sub}>
                           <Link
                             href={`/products?category=${cat.slug}&sub=${encodeURIComponent(sub)}`}
-                            className="text-sm text-ink/70 transition-colors hover:text-ink"
+                            className="relative text-sm text-ink/70 transition-colors hover:text-ink group/item inline-block pb-0.5"
                           >
                             {sub}
+                            <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-accent transition-all duration-300 group-hover/item:w-full" />
                           </Link>
                         </li>
                       ))}
