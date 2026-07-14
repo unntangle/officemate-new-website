@@ -108,11 +108,12 @@ export function Navbar() {
                   setMoreOpen(false);
                 }}
                 className={cn(
-                  "rounded-full px-4 py-2 text-sm font-medium transition-colors hover:text-ink",
+                  "relative px-4 py-2 text-sm font-medium transition-colors hover:text-ink group",
                   pathname === link.href ? "text-ink" : "text-ink/80"
                 )}
               >
                 {link.label}
+                <span className="absolute bottom-1 left-4 right-4 h-[2px] w-0 bg-accent transition-all duration-300 group-hover:w-[calc(100%-32px)]" />
               </Link>
             );
           })}
@@ -127,7 +128,7 @@ export function Navbar() {
               onClick={() => setMoreOpen((v) => !v)}
               aria-expanded={moreOpen}
               className={cn(
-                "flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-ink/80 transition-colors hover:text-ink",
+                "relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-ink/80 transition-colors hover:text-ink group",
                 moreOpen && "text-ink"
               )}
             >
@@ -139,6 +140,7 @@ export function Navbar() {
                   moreOpen && "rotate-180"
                 )}
               />
+              <span className="absolute bottom-1 left-4 right-4 h-[2px] w-0 bg-accent transition-all duration-300 group-hover:w-[calc(100%-32px)]" />
             </button>
 
             <AnimatePresence>
