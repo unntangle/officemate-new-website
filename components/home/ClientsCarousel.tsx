@@ -47,35 +47,39 @@ export function ClientsCarousel() {
       <div className="relative w-full overflow-hidden flex whitespace-nowrap">
         {/* We use two identical blocks animating to -100% for a mathematically seamless loop */}
         <div className="flex animate-marquee w-max items-center">
-          <div className="flex w-max items-center justify-around gap-12 md:gap-24 px-6 md:px-12">
+          <div className="flex w-max items-center justify-around gap-6 md:gap-10 px-3 md:px-5">
             {CLIENT_LOGOS.map((logo, idx) => (
               <div
                 key={`logo-1-${idx}`}
-                className="relative w-28 h-12 md:w-36 md:h-16 shrink-0"
+                className="w-40 h-24 md:w-56 md:h-32 shrink-0 bg-[#f7f7f7] border border-black/5 rounded-2xl p-4 md:p-6 transition-transform hover:-translate-y-1"
               >
-                <Image
-                  src={`/images/clients/${logo}`}
-                  alt={`${logo.replace(".png", "")} logo`}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 768px) 112px, 144px"
-                />
+                <div className="relative w-full h-full">
+                  <Image
+                    src={`/images/clients/${logo}`}
+                    alt={`${logo.replace(".png", "")} logo`}
+                    fill
+                    className="object-contain drop-shadow-sm"
+                    sizes="(max-width: 768px) 160px, 224px"
+                  />
+                </div>
               </div>
             ))}
           </div>
-          <div className="flex w-max items-center justify-around gap-12 md:gap-24 px-6 md:px-12">
+          <div className="flex w-max items-center justify-around gap-6 md:gap-10 px-3 md:px-5">
             {CLIENT_LOGOS.map((logo, idx) => (
               <div
                 key={`logo-2-${idx}`}
-                className="relative w-28 h-12 md:w-36 md:h-16 shrink-0"
+                className="w-40 h-24 md:w-56 md:h-32 shrink-0 bg-[#f7f7f7] border border-black/5 rounded-2xl p-4 md:p-6 transition-transform hover:-translate-y-1"
               >
-                <Image
-                  src={`/images/clients/${logo}`}
-                  alt={`${logo.replace(".png", "")} logo`}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 768px) 112px, 144px"
-                />
+                <div className="relative w-full h-full">
+                  <Image
+                    src={`/images/clients/${logo}`}
+                    alt={`${logo.replace(".png", "")} logo`}
+                    fill
+                    className="object-contain drop-shadow-sm"
+                    sizes="(max-width: 768px) 160px, 224px"
+                  />
+                </div>
               </div>
             ))}
           </div>
