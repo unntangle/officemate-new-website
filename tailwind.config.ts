@@ -15,15 +15,16 @@ const config: Config = {
     },
     extend: {
       colors: {
-        canvas: "#FAFAFA",
-        surface: "#F5F5F5",
-        ink: "#111111",
-        muted: "#666666",
+        canvas: "#F8F5F2",
+        surface: "#EFE9E3",
+        ink: "#2D2D2D",
+        muted: "#7A6B63",
         accent: {
-          DEFAULT: "#2E5BFF",
-          soft: "#EBF0FF",
+          DEFAULT: "#C62828",
+          soft: "#FDECEA",
         },
-        line: "#E5E5E5",
+        walnut: "#6D4C41",
+        line: "#E2D9D0",
         card: "#FFFFFF",
       },
       fontFamily: {
@@ -40,9 +41,9 @@ const config: Config = {
         "3xl": "2rem",
       },
       boxShadow: {
-        soft: "0 2px 8px -2px rgba(17,17,17,0.06), 0 8px 30px -12px rgba(17,17,17,0.10)",
-        lift: "0 10px 40px -12px rgba(17,17,17,0.16)",
-        accent: "0 12px 34px -12px rgba(46,91,255,0.45)",
+        soft: "0 2px 8px -2px rgba(45,45,45,0.06), 0 8px 30px -12px rgba(45,45,45,0.10)",
+        lift: "0 10px 40px -12px rgba(45,45,45,0.18)",
+        accent: "0 12px 34px -12px rgba(198,40,40,0.40)",
       },
       keyframes: {
         "accordion-down": {

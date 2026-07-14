@@ -79,14 +79,14 @@ export default function ContactPage() {
                   <path
                     d="M0 190 Q 160 120 300 200 T 640 170"
                     fill="none"
-                    stroke="#2E5BFF"
+                    stroke="#C62828"
                     strokeWidth="3"
                     strokeOpacity="0.35"
                   />
                   <path
                     d="M120 0 L 180 240"
                     fill="none"
-                    stroke="#2E5BFF"
+                    stroke="#C62828"
                     strokeWidth="3"
                     strokeOpacity="0.2"
                   />

@@ -22,8 +22,8 @@
   }
 
   ::selection {
-    background: rgba(46, 91, 255, 0.16);
-    color: #111111;
+    background: rgba(198, 40, 40, 0.15);
+    color: #2D2D2D;
   }
 
   /* Accessible focus ring across interactive elements. */
@@ -32,7 +32,7 @@
   input:focus-visible,
   textarea:focus-visible,
   [tabindex]:focus-visible {
-    outline: 2px solid #2e5bff;
+    outline: 2px solid #C62828;
     outline-offset: 2px;
     border-radius: 4px;
   }

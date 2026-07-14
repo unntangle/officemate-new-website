@@ -60,7 +60,7 @@ export function ProductRender({
       </g>
 
       {blueprint && (
-        <g stroke="#2E5BFF" strokeWidth="1" opacity="0.5" fill="none">
+        <g stroke="#C62828" strokeWidth="1" opacity="0.5" fill="none">
           <line x1="96" y1="120" x2="96" y2="520" strokeDasharray="2 6" />
           <line x1="544" y1="120" x2="544" y2="520" strokeDasharray="2 6" />
           <line x1="96" y1="120" x2="112" y2="120" />
@@ -68,7 +68,7 @@ export function ProductRender({
           <text
             x="72"
             y="324"
-            fill="#2E5BFF"
+            fill="#C62828"
             fontSize="13"
             fontFamily="var(--font-sans)"
             letterSpacing="2"

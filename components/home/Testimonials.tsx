@@ -99,7 +99,7 @@ export function Testimonials() {
                 className="h-1.5 rounded-full transition-all duration-300"
                 style={{
                   width: i === index ? 28 : 8,
-                  background: i === index ? "#2E5BFF" : "#E5E5E5",
+                  background: i === index ? "#C62828" : "#E2D9D0",
                 }}
               />
             ))}

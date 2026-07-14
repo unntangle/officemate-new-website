@@ -16,11 +16,11 @@ export const PRODUCTS: Product[] = [
     tagline: "Adaptive lumbar that tracks the curve of your spine.",
     description:
       "The Glide Ergo is our most-adjustable task chair. A self-weighing recline reads how you lean and meters resistance automatically, so the chair follows you instead of fighting you. The back is a single sheet of breathable knit tensioned across a flex frame — firm where you need support, forgiving everywhere else.",
-    swatch: "#2E5BFF",
+    swatch: "#C62828",
     colors: [
       { name: "Graphite", hex: "#2B2B2E" },
       { name: "Fog", hex: "#C9CCD1" },
-      { name: "Cobalt", hex: "#2E5BFF" },
+      { name: "Red Accent", hex: "#C62828" },
     ],
     badges: ["Adaptive lumbar", "Breathable knit", "135° recline"],
     features: [
@@ -318,7 +318,7 @@ export const PRODUCTS: Product[] = [
     swatch: "#111827",
     colors: [
       { name: "Blackout", hex: "#111827" },
-      { name: "Cobalt", hex: "#2E5BFF" },
+      { name: "Red Accent", hex: "#C62828" },
       { name: "Crimson", hex: "#9B1C1C" },
     ],
     badges: ["Wraparound bolsters", "Magnetic pillow", "165° recline"],

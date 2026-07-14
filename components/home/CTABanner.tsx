@@ -34,7 +34,7 @@ export function CTABanner() {
             </svg>
             <div
               className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-40 blur-3xl"
-              style={{ background: "radial-gradient(circle, #2E5BFF, transparent 70%)" }}
+              style={{ background: "radial-gradient(circle, #C62828, transparent 70%)" }}
               aria-hidden
             />
 
