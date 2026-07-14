@@ -53,15 +53,22 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-all duration-300",
-        scrolled ? "glass border-b border-line" : "bg-transparent"
+        "sticky top-0 z-50 w-full transition-all duration-300",
+        scrolled ? "py-3 md:py-4" : "py-0"
       )}
       onMouseLeave={() => {
         setMegaOpen(false);
         setMoreOpen(false);
       }}
     >
-      <div className="container flex h-16 items-center justify-between md:h-[72px]">
+      <div
+        className={cn(
+          "transition-all duration-300 flex items-center justify-between",
+          scrolled
+            ? "glass border border-line rounded-full shadow-soft max-w-6xl mx-auto px-6 h-14 md:h-16 md:px-8"
+            : "container border-b border-transparent h-16 md:h-[72px]"
+        )}
+      >
         <Link href="/" className="flex items-center gap-2" aria-label={`${SITE.name} home`}>
           <Image
             src="/images/logo.webp"
