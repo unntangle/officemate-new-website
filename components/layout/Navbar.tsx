@@ -90,11 +90,12 @@ export function Navbar() {
                   onClick={() => setMegaOpen((v) => !v)}
                   aria-expanded={megaOpen}
                   className={cn(
-                    "rounded-full px-4 py-2 text-sm font-medium text-ink/80 transition-colors hover:text-ink",
+                    "relative px-4 py-2 text-sm font-medium text-ink/80 transition-colors hover:text-ink group",
                     megaOpen && "text-ink"
                   )}
                 >
                   {link.label} +
+                  <span className="absolute bottom-1 left-4 right-4 h-[2px] w-0 bg-accent transition-all duration-300 group-hover:w-[calc(100%-32px)]" />
                 </button>
               );
             }
@@ -200,9 +201,10 @@ export function Navbar() {
                   <div key={cat.slug}>
                     <Link
                       href={`/products?category=${cat.slug}`}
-                      className="text-sm font-semibold text-accent hover:underline"
+                      className="relative text-sm font-semibold text-accent group/title inline-block pb-1"
                     >
                       {cat.name}
+                      <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-accent transition-all duration-300 group-hover/title:w-full" />
                     </Link>
                     <ul className="mt-2 space-y-1.5 border-l-2 border-line pl-3">
                       {cat.subcategories?.map((sub) => (
