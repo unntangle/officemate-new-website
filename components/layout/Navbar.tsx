@@ -14,9 +14,11 @@ import { EnquireButton } from "@/components/common/EnquireButton";
 import { ProductRender } from "@/components/common/ProductRender";
 
 /* Links shown directly in the navbar */
-const PRIMARY_HREFS = ["/", "/company", "/products"];
+const PRIMARY_HREFS = ["/", "/company", "/products", "/career"];
 const primaryLinks = NAV_LINKS.filter((l) => PRIMARY_HREFS.includes(l.href));
-const moreLinks = NAV_LINKS.filter((l) => !PRIMARY_HREFS.includes(l.href));
+const moreLinks = NAV_LINKS.filter(
+  (l) => !PRIMARY_HREFS.includes(l.href) && l.href !== "/contact"
+);
 
 export function Navbar() {
   const pathname = usePathname();
@@ -145,7 +147,7 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-line bg-white/95 shadow-lg backdrop-blur-xl"
+                  className="absolute right-0 top-full mt-3 w-56 overflow-hidden rounded-2xl border border-line glass shadow-lift"
                   onMouseEnter={() => setMoreOpen(true)}
                 >
                   <div className="py-2">
