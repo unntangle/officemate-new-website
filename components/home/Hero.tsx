@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EnquireButton } from "@/components/common/EnquireButton";
 import { EASE } from "@/lib/motion";
@@ -96,6 +96,20 @@ export function Hero() {
           <span className="h-2 w-5 rounded-full bg-white" />
           <span className="h-2 w-2 rounded-full bg-white/40" />
         </div>
+
+        {/* Carousel slide controls — like AFC India */}
+        <button
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/25 border border-white/15 active:scale-95"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/25 border border-white/15 active:scale-95"
+          aria-label="Next slide"
+        >
+          <ChevronRight size={24} />
+        </button>
       </div>
 
       {/* Stats strip below hero */}
