@@ -189,8 +189,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-full mt-3 hidden md:block max-w-4xl w-full rounded-2xl border border-line glass shadow-lift"
-            style={{ left: "50%", transform: "translateX(-50%)" }}
+            className="absolute left-0 right-0 mx-auto top-full mt-3 hidden md:block max-w-4xl w-full rounded-2xl border border-line glass shadow-lift"
             onMouseEnter={() => setMegaOpen(true)}
           >
             <div className="px-8 py-7">
