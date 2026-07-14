@@ -51,7 +51,7 @@ export function ClientsCarousel() {
             {CLIENT_LOGOS.map((logo, idx) => (
               <div
                 key={`logo-1-${idx}`}
-                className="w-40 h-24 md:w-56 md:h-32 shrink-0 bg-[#f7f7f7] border border-black/5 rounded-2xl p-4 md:p-6 transition-transform hover:-translate-y-1"
+                className="w-40 h-24 md:w-56 md:h-32 shrink-0 bg-[#f7f7f7] border border-black/5 rounded-2xl p-2 md:p-3 transition-transform hover:-translate-y-1"
               >
                 <div className="relative w-full h-full">
                   <Image
@@ -69,7 +69,7 @@ export function ClientsCarousel() {
             {CLIENT_LOGOS.map((logo, idx) => (
               <div
                 key={`logo-2-${idx}`}
-                className="w-40 h-24 md:w-56 md:h-32 shrink-0 bg-[#f7f7f7] border border-black/5 rounded-2xl p-4 md:p-6 transition-transform hover:-translate-y-1"
+                className="w-40 h-24 md:w-56 md:h-32 shrink-0 bg-[#f7f7f7] border border-black/5 rounded-2xl p-2 md:p-3 transition-transform hover:-translate-y-1"
               >
                 <div className="relative w-full h-full">
                   <Image
