@@ -189,10 +189,10 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-full hidden border-b border-line bg-white/97 backdrop-blur-xl md:block shadow-soft"
+            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 hidden md:block max-w-5xl w-full rounded-2xl border border-line bg-white shadow-lift"
             onMouseEnter={() => setMegaOpen(true)}
           >
-            <div className="container py-8">
+            <div className="px-8 py-7">
               <div className="grid grid-cols-4 gap-x-8 gap-y-6">
                 {CATEGORIES.map((cat) => (
                   <div key={cat.slug}>
@@ -202,12 +202,12 @@ export function Navbar() {
                     >
                       {cat.name}
                     </Link>
-                    <ul className="mt-2 space-y-1.5 border-l border-line pl-3">
+                    <ul className="mt-2 space-y-1.5 border-l-2 border-line pl-3">
                       {cat.subcategories?.map((sub) => (
                         <li key={sub}>
                           <Link
                             href={`/products?category=${cat.slug}&sub=${encodeURIComponent(sub)}`}
-                            className="text-sm text-muted transition-colors hover:text-ink"
+                            className="text-sm text-ink/70 transition-colors hover:text-ink"
                           >
                             {sub}
                           </Link>
