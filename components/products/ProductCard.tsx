@@ -1,15 +1,29 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Product } from "@/types";
-import { formatPrice } from "@/lib/utils";
+
 import { categoryName } from "@/constants/categories";
 import { EnquireButton } from "@/components/common/EnquireButton";
 import { ProductRender } from "@/components/common/ProductRender";
-import { Rating } from "@/components/common/Rating";
+
+/**
+ * Map of slug → public image path.
+ * Add an entry here whenever a real product photo is available.
+ */
+const PRODUCT_IMAGES: Record<string, string> = {
+  zenpro:   "/images/products/chairs/zenpro.png",
+  jupiter:  "/images/products/chairs/Jupiter.png",
+  webstar:  "/images/products/chairs/webstar.jpg",
+  ferro:    "/images/products/chairs/ferro.jpg",
+  altura:   "/images/products/chairs/altura.png",
+};
 
 export function ProductCard({ product }: { product: Product }) {
+  const imageSrc = PRODUCT_IMAGES[product.slug];
+
   return (
     <motion.article
       layout
@@ -23,17 +37,22 @@ export function ProductCard({ product }: { product: Product }) {
         href={`/products/${product.slug}`}
         className="relative block aspect-square overflow-hidden bg-surface"
       >
-        {product.isNew && (
-          <span className="absolute left-3 top-3 z-10 rounded-full bg-ink px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-wider text-white">
-            New
-          </span>
-        )}
         <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.06]">
-          <ProductRender
-            category={product.category}
-            color={product.swatch}
-            label={product.name}
-          />
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt={product.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 80vw, 280px"
+            />
+          ) : (
+            <ProductRender
+              category={product.category}
+              color={product.swatch}
+              label={product.name}
+            />
+          )}
         </div>
       </Link>
 
@@ -46,37 +65,12 @@ export function ProductCard({ product }: { product: Product }) {
         </Link>
         <p className="mt-1.5 line-clamp-2 text-sm text-muted">{product.tagline}</p>
 
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {product.badges.slice(0, 3).map((b) => (
-            <span
-              key={b}
-              className="rounded-full bg-surface px-2.5 py-1 text-[0.7rem] text-muted"
-            >
-              {b}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-4">
-          <Rating value={product.rating} size={13} />
-        </div>
-
-        <div className="mt-auto flex items-end justify-between pt-5">
-          <div>
-            <p className="display text-lg font-semibold text-ink">
-              {formatPrice(product.price)}
-            </p>
-            {product.compareAtPrice && (
-              <p className="text-xs text-muted line-through">
-                {formatPrice(product.compareAtPrice)}
-              </p>
-            )}
-          </div>
+        <div className="mt-auto pt-5">
           <EnquireButton
             product={product.name}
             size="sm"
             variant="outline"
-            className="shrink-0"
+            className="w-full"
           />
         </div>
       </div>
