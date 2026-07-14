@@ -15,16 +15,16 @@ const config: Config = {
     },
     extend: {
       colors: {
-        canvas: "#F8F5F2",
-        surface: "#EFE9E3",
+        canvas: "#FFFFFF",
+        surface: "#F5F5F5",
         ink: "#2D2D2D",
-        muted: "#7A6B63",
+        muted: "#666666",
         accent: {
           DEFAULT: "#C62828",
           soft: "#FDECEA",
         },
         walnut: "#6D4C41",
-        line: "#E2D9D0",
+        line: "#E5E5E5",
         card: "#FFFFFF",
       },
       fontFamily: {
