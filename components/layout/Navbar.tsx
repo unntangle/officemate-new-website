@@ -150,7 +150,7 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-white/50 glass shadow-lift"
+                  className="absolute right-0 top-full mt-2 w-56 overflow-hidden rounded-2xl border border-white/50 glass shadow-lift z-50"
                   onMouseEnter={() => setMoreOpen(true)}
                 >
                   <div className="py-2 relative z-10">
@@ -196,7 +196,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-0 right-0 mx-auto top-full mt-2 hidden md:block max-w-4xl w-full rounded-2xl border border-white/50 glass shadow-lift pointer-events-auto"
+            className="absolute left-0 right-0 mx-auto top-full mt-2 hidden md:block max-w-4xl w-full rounded-2xl border border-white/50 glass shadow-lift pointer-events-auto z-50"
             onMouseEnter={() => setMegaOpen(true)}
           >
             <div className="px-8 py-7 relative z-10">
