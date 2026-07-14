@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/Hero";
+import { ClientsCarousel } from "@/components/home/ClientsCarousel";
 import { Categories } from "@/components/home/Categories";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { WhyChoose } from "@/components/home/WhyChoose";
@@ -13,6 +14,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <ClientsCarousel />
       <Categories />
       <FeaturedProducts />
       <WhyChoose />
