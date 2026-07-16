@@ -14,8 +14,6 @@ import {
   Armchair,
   Wind,
   Move3d,
-  Star,
-  Heart,
   Phone,
 } from "lucide-react";
 import { PRODUCTS, getProduct, getRelated } from "@/constants/products";
@@ -26,7 +24,6 @@ import { Reveal } from "@/components/common/Reveal";
 import { Accordion } from "@/components/common/Accordion";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { EnquireButton } from "@/components/common/EnquireButton";
-import { HealthScoreBadge } from "@/components/common/HealthScoreBadge";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { StickyEnquiry } from "@/components/products/StickyEnquiry";
@@ -140,25 +137,7 @@ export default async function ProductDetailPage({
         />
 
         <div className="lg:py-4">
-          {/* Badge row */}
-          <div className="flex flex-wrap items-center gap-2">
-            {product.featured && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1.5 text-xs font-bold text-accent">
-                <Heart size={12} className="fill-accent" />
-                Best Seller
-              </span>
-            )}
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-soft px-3 py-1.5 text-xs font-bold text-sage-ink">
-              <Star size={12} className="fill-sage-ink" />
-              {product.rating}
-              <span className="font-medium text-sage-ink/70">
-                ({product.reviewCount} reviews)
-              </span>
-            </span>
-            <HealthScoreBadge slug={product.slug} />
-          </div>
-
-          <span className="eyebrow mt-5 block">
+          <span className="eyebrow block">
             {categoryName(product.category)}
           </span>
           <h1 className="display mt-2 text-3xl font-semibold leading-[1.05] text-ink sm:text-4xl md:text-[2.75rem]">
@@ -219,18 +198,6 @@ export default async function ProductDetailPage({
             </div>
           </div>
 
-          {/* Badges */}
-          <div className="mt-5 flex flex-wrap gap-2">
-            {product.badges.map((b) => (
-              <span
-                key={b}
-                className="rounded-full bg-surface px-3 py-1.5 text-xs font-medium text-muted"
-              >
-                {b}
-              </span>
-            ))}
-          </div>
-
           {/* CTA */}
           <div className="mt-6">
             <EnquireButton
@@ -238,7 +205,7 @@ export default async function ProductDetailPage({
               variant="accent"
               size="lg"
               withArrow
-              className="w-full"
+              className="w-full hover:shadow-none"
             />
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <EnquireButton

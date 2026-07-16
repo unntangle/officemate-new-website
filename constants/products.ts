@@ -575,9 +575,8 @@ export const PRODUCTS: Product[] = [
     tagline: "Posture-correcting mesh chair built for marathon focus.",
     description:
       "Zenpro is engineered for the deep-work hours when comfort can't be an afterthought. A tri-zone mesh backrest targets shoulders, mid-back and lumbar independently, while a waterfall seat edge reduces thigh pressure so circulation stays strong through long sittings.",
-    swatch: "#2D6A4F",
+    swatch: "#2B2B2E",
     colors: [
-      { name: "Forest", hex: "#2D6A4F" },
       { name: "Charcoal", hex: "#2B2B2E" },
       { name: "Fog", hex: "#C9CCD1" },
     ],

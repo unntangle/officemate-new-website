@@ -88,7 +88,7 @@ export function ProductGallery({
       <div className="flex gap-3">
         {/* Thumbnail rail — vertical alongside the shot on desktop */}
         {views.length > 1 && (
-          <div className="thin-scrollbar hidden max-h-[calc(100vh-11rem)] w-[5rem] shrink-0 flex-col gap-3 overflow-y-auto p-1 lg:flex">
+          <div className="thin-scrollbar hidden max-h-[calc(100vh-9rem)] w-[5rem] shrink-0 flex-col gap-3 overflow-y-auto p-1 lg:flex">
             {views.map((v) => (
               <Thumb key={v} v={v} />
             ))}
@@ -97,7 +97,7 @@ export function ProductGallery({
 
         {/* Main shot — click to preview. Square, sized from the viewport
            height, so the frame is exactly as wide as the shot inside it. */}
-        <div className="group relative aspect-square w-full flex-1 overflow-hidden rounded-xl bg-surface lg:h-[min(calc(100vh-11rem),48rem)] lg:w-auto lg:flex-none">
+        <div className="group relative aspect-square w-full flex-1 overflow-hidden rounded-xl bg-surface lg:h-[min(calc(100vh-9rem),52rem)] lg:w-auto lg:flex-none">
           <button
             onClick={() => setPreview(true)}
             aria-label={`Preview ${name}`}
