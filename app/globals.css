@@ -79,6 +79,56 @@
     -webkit-backdrop-filter: saturate(180%) blur(18px);
     pointer-events: none;
   }
+
+  /* Dark translucent glass — matches the hero category pill. */
+  .glass-dark {
+    position: relative;
+    background: transparent;
+  }
+
+  .glass-dark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: rgba(20, 20, 20, 0.28);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    pointer-events: none;
+    transition: background 0.3s ease;
+  }
+
+  .glass-dark.is-scrolled::before {
+    background: rgba(20, 20, 20, 0.45);
+    backdrop-filter: saturate(150%) blur(16px);
+    -webkit-backdrop-filter: saturate(150%) blur(16px);
+  }
+
+  /* Light translucent glass — frosted white, for dark type on light pages. */
+  .glass-light {
+    position: relative;
+    background: transparent;
+  }
+
+  .glass-light::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: saturate(200%) blur(28px);
+    -webkit-backdrop-filter: saturate(200%) blur(28px);
+    pointer-events: none;
+    transition: background 0.3s ease;
+  }
+
+  .glass-light.is-scrolled::before {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: saturate(200%) blur(32px);
+    -webkit-backdrop-filter: saturate(200%) blur(32px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -103,5 +153,27 @@
   border: 3px solid #fafafa;
 }
 ::-webkit-scrollbar-thumb:hover {
+  background: #c3c6cd;
+}
+
+/* Narrow variant for inner rails, e.g. the product gallery thumbnails,
+   where the default 10px bar eats into a tight column. */
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #d9dbe0 transparent;
+}
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: #d9dbe0;
+  border: 0;
+  border-radius: 999px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #c3c6cd;
 }

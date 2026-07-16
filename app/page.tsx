@@ -1,11 +1,10 @@
 import { Hero } from "@/components/home/Hero";
 import { ClientsCarousel } from "@/components/home/ClientsCarousel";
+import { ErgonomicAdvisor } from "@/components/home/ErgonomicAdvisor";
 import { Categories } from "@/components/home/Categories";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
-import { WhyChoose } from "@/components/home/WhyChoose";
-import { Showcase } from "@/components/home/Showcase";
+import { ChairHealthScore } from "@/components/home/ChairHealthScore";
 import { Stats } from "@/components/home/Stats";
-import { Process } from "@/components/home/Process";
 import { Testimonials } from "@/components/home/Testimonials";
 import { FAQ } from "@/components/home/FAQ";
 import { CTABanner } from "@/components/home/CTABanner";
@@ -15,12 +14,13 @@ export default function HomePage() {
     <>
       <Hero />
       <ClientsCarousel />
+      {/* Differentiators first — the advisor captures intent, the score backs it up */}
+      <ErgonomicAdvisor />
       <Categories />
       <FeaturedProducts />
-      <WhyChoose />
-      <Showcase />
+      <ChairHealthScore />
+      {/* Table stakes below */}
       <Stats />
-      <Process />
       <Testimonials />
       <FAQ />
       <CTABanner />

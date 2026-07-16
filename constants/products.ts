@@ -1051,3 +1051,70 @@ export const getRelated = (slugs: string[]) =>
 
 const FEATURED_SLUGS = ["zenpro", "webstar", "ferro", "altura", "jupiter"];
 export const FEATURED = FEATURED_SLUGS.map((s) => PRODUCTS.find((p) => p.slug === s)!).filter(Boolean);
+
+/**
+ * Map of slug → public image path.
+ * Add an entry here whenever a real product photo is available.
+ */
+export const PRODUCT_IMAGES: Record<string, string> = {
+  zenpro:   "/images/products/chairs/zenpro.webp",
+  jupiter:  "/images/products/chairs/Jupiter.webp",
+  webstar:  "/images/products/chairs/webstar.webp",
+  ferro:    "/images/products/chairs/ferro.webp",
+  altura:   "/images/products/chairs/altura.webp",
+};
+
+/**
+ * Map of slug → multiple public image paths, in display order.
+ * When a slug appears here the product gallery shows these as switchable
+ * views with thumbnails; otherwise it falls back to PRODUCT_IMAGES.
+ */
+export const PRODUCT_GALLERIES: Record<string, string[]> = {
+  /* Product shots first, then the feature panels.
+     Note: spaces in the filenames are URL-encoded (%20) — "Front  Perspective"
+     genuinely has two spaces. Renaming these to kebab-case would be safer. */
+  zenpro: [
+    "/images/products/chairs/Zenpro/Front.webp",
+    "/images/products/chairs/Zenpro/Front%20%20Perspective.webp",
+    "/images/products/chairs/Zenpro/Side.webp",
+    "/images/products/chairs/Zenpro/Rear%20Perspective.webp",
+    "/images/products/chairs/Zenpro/Rear.webp",
+    "/images/products/chairs/Zenpro/1.webp",
+    "/images/products/chairs/Zenpro/2.webp",
+    "/images/products/chairs/Zenpro/3.webp",
+    "/images/products/chairs/Zenpro/4.webp",
+    "/images/products/chairs/Zenpro/5.webp",
+  ],
+};
+
+/** Every photo for a product, richest source first. */
+export const galleryFor = (slug: string): string[] =>
+  PRODUCT_GALLERIES[slug] ?? (PRODUCT_IMAGES[slug] ? [PRODUCT_IMAGES[slug]] : []);
+
+/** Products belonging to a category, photographed ones first. */
+export const productsByCategory = (slug: string) =>
+  PRODUCTS.filter((p) => p.category === slug).sort(
+    (a, b) => Number(Boolean(PRODUCT_IMAGES[b.slug])) - Number(Boolean(PRODUCT_IMAGES[a.slug]))
+  );
+
+/**
+ * Explicit artwork for a subcategory, keyed `categorySlug:Subcategory name`.
+ * Used by the products mega menu so each tile shows a deliberate shot rather
+ * than whichever product happens to sort first.
+ */
+export const SUBCATEGORY_IMAGES: Record<string, string> = {
+  "office-chairs:Executive Series": "/images/products/chairs/zenpro.webp",
+  "office-chairs:Leather Series": "/images/products/chairs/webstar.webp",
+  "office-chairs:Leatherette Series": "/images/products/chairs/ferro.webp",
+};
+
+/**
+ * TEMPORARY: stand-in shots for categories without photography yet.
+ * Cycled by tile position so the menu never falls back to a generated render.
+ * Remove once real artwork lands in SUBCATEGORY_IMAGES.
+ */
+export const PLACEHOLDER_IMAGES: string[] = [
+  "/images/products/chairs/zenpro.webp",
+  "/images/products/chairs/webstar.webp",
+  "/images/products/chairs/ferro.webp",
+];

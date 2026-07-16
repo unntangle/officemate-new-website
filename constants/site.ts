@@ -5,11 +5,12 @@ export const SITE = {
     "Officemate designs ergonomic chairs, standing desks and workspace accessories engineered around how the body actually moves — so you can focus longer and finish the day feeling better.",
   url: "https://officemate.in",
   email: "hello@officemate.in",
-  phone: "+91 80 4718 2200",
+  phone: "+91 97898 27270",
+  /** Registered / corporate address — see LOCATIONS for the full list. */
   address: {
-    line1: "Officemate Studio, 4th Floor",
-    line2: "Design District, Indiranagar",
-    city: "Bengaluru 560038, India",
+    line1: "Zebro Officemate Pvt Ltd, No 67/3, E Spur Tank Road",
+    line2: "M.S. Nagar, Mukta Gardens, Chetpet",
+    city: "Chennai, Tamil Nadu 600031, India",
   },
   hours: [
     { day: "Monday – Friday", time: "9:30 – 18:30" },
@@ -24,10 +25,39 @@ export const SITE = {
   ],
 };
 
+/** Physical locations, shown in the footer and on the contact page. */
+export const LOCATIONS = [
+  {
+    label: "Corporate Office",
+    name: "Zebro Officemate Pvt Ltd",
+    lines: [
+      "No 67/3, E Spur Tank Road",
+      "M.S. Nagar, Mukta Gardens, Chetpet",
+      "Chennai, Tamil Nadu 600031",
+    ],
+    phone: "+91 97898 27270",
+    mapUrl:
+      "https://www.google.com/maps/search/?api=1&query=Zebro+Officemate+Pvt+Ltd+No+67+3+E+Spur+Tank+Rd+Chetpet+Chennai+600031",
+  },
+  {
+    label: "Experience Centre",
+    name: "Officemate Experience Centre",
+    lines: [
+      "New No. 72, Ace Plantina, Gopathy Narayana Road",
+      "Thirumurthy Nagar, Satyamurthy Nagar, T. Nagar",
+      "Chennai, Tamil Nadu 600017",
+    ],
+    phone: "+91 97898 27270",
+    mapUrl:
+      "https://www.google.com/maps/search/?api=1&query=Officemate+72+Ace+Plantina+Gopathy+Narayana+Rd+T+Nagar+Chennai+600017",
+  },
+];
+
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Company", href: "/company" },
   { label: "Products", href: "/products", hasDropdown: true },
+  { label: "Ergonomic Advisor", href: "/advisor" },
   { label: "Projects", href: "/projects" },
   { label: "Infrastructure", href: "/infrastructure" },
   { label: "Resources", href: "/resources" },
@@ -93,33 +123,52 @@ export const PROCESS = [
   },
 ];
 
+/**
+ * Homepage testimonials, attributed to clients from the logo carousel.
+ *
+ * PLACEHOLDER COPY — the companies are real Officemate clients, but these
+ * quotes, names and seat counts are written for demo purposes. Every one must
+ * be replaced with an approved, on-record quote before this site goes live.
+ */
 export const TESTIMONIALS = [
   {
     quote:
-      "My lower back used to ache by 3pm. Three weeks in the Glide Ergo and that's simply gone. The recline follows me instead of tipping me back.",
-    name: "Ananya Rao",
-    role: "Product Designer",
-    rating: 5,
-  },
-  {
-    quote:
-      "We fitted an entire floor with Mesh Task Pro chairs. Setup was painless and, more importantly, the complaints stopped completely.",
+      "We replaced 400 seats across three floors without a single day of downtime. Six months on, the ergonomic complaints that used to fill our facilities inbox have effectively stopped.",
     name: "Vikram Shah",
     role: "Head of Workplace",
+    company: "Freshworks",
+    logo: "freshworks.webp",
+    detail: "420 seats · Chennai",
     rating: 5,
   },
   {
     quote:
-      "The Flow Executive looks like a boardroom chair and supports my back like a task chair. I didn't think I could have both.",
+      "Procurement usually means choosing between price and quality. Officemate gave us a transparent ergonomic rating per model, so we could defend the spend to finance with data rather than opinion.",
     name: "Meera Nair",
-    role: "Managing Director",
+    role: "Director — Procurement",
+    company: "Bosch",
+    logo: "bosch.webp",
+    detail: "1,100 seats · 4 cities",
     rating: 5,
   },
   {
     quote:
-      "The Orbit desk raises during calls without anyone hearing it. Four presets means my partner and I never argue over height.",
-    name: "Daniel George",
-    role: "Software Engineer",
+      "They assessed the floor before quoting, staggered delivery around our shift patterns and handled installation overnight. The AMC has been just as dependable two years in.",
+    name: "Rajesh Menon",
+    role: "General Manager — Admin",
+    company: "Royal Enfield",
+    logo: "royal-enfield.webp",
+    detail: "680 seats · Chennai",
+    rating: 5,
+  },
+  {
+    quote:
+      "Our teams sit for nine hours a day, so seating is a retention issue, not a furniture line item. Reported back pain across the operations floor dropped noticeably after the rollout.",
+    name: "Ananya Rao",
+    role: "VP — People & Culture",
+    company: "Access Healthcare",
+    logo: "access-healthcare.webp",
+    detail: "250 seats · Pune",
     rating: 5,
   },
 ];

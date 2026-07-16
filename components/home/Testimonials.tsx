@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
 import { TESTIMONIALS } from "@/constants/site";
@@ -34,8 +35,8 @@ export function Testimonials() {
       <div className="container">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
-            eyebrow="Community reviews"
-            title="Backs, straightened"
+            eyebrow="Client testimonials"
+            title="Trusted by workplace teams"
           />
           <div className="flex gap-2">
             <button
@@ -55,8 +56,8 @@ export function Testimonials() {
           </div>
         </div>
 
-        <div className="relative mt-10 min-h-[280px] overflow-hidden rounded-3xl border border-line bg-surface p-8 md:min-h-[240px] md:p-14">
-          <Quote className="absolute right-8 top-8 text-line" size={64} />
+        <div className="relative mt-10 min-h-[280px] overflow-hidden rounded-3xl bg-lilac-soft p-8 md:min-h-[240px] md:p-14">
+          <Quote className="absolute right-8 top-8 text-lilac/30" size={64} />
           <AnimatePresence mode="wait" custom={dir}>
             <motion.blockquote
               key={index}
@@ -67,24 +68,34 @@ export function Testimonials() {
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="relative max-w-3xl"
             >
-              <div className="mb-5 flex gap-1">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star key={i} size={16} className="fill-accent text-accent" />
-                ))}
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex gap-1">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star key={i} size={16} className="fill-accent text-accent" />
+                  ))}
+                </div>
+                <span className="rounded-full bg-canvas/70 px-2.5 py-1 text-xs font-medium text-lilac-ink">
+                  {t.detail}
+                </span>
               </div>
               <p className="display text-2xl font-medium leading-snug text-ink md:text-3xl">
                 &ldquo;{t.quote}&rdquo;
               </p>
-              <footer className="mt-6 flex items-center gap-3">
-                <span
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-ink text-sm font-semibold text-white"
-                  aria-hidden
-                >
-                  {t.name.charAt(0)}
+              <footer className="mt-6 flex items-center gap-4">
+                <span className="relative h-11 w-24 shrink-0 rounded-xl bg-canvas p-1.5">
+                  <Image
+                    src={`/images/clients/${t.logo}`}
+                    alt={t.company}
+                    fill
+                    sizes="96px"
+                    className="object-contain p-1"
+                  />
                 </span>
                 <div>
-                  <p className="font-medium text-ink">{t.name}</p>
-                  <p className="text-sm text-muted">{t.role}</p>
+                  <p className="font-semibold text-ink">{t.company}</p>
+                  <p className="text-sm text-muted">
+                    {t.name} · {t.role}
+                  </p>
                 </div>
               </footer>
             </motion.blockquote>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/common/Reveal";
 import { EnquireButton } from "@/components/common/EnquireButton";
@@ -37,6 +38,19 @@ export function CTABanner() {
               style={{ background: "radial-gradient(circle, #C62828, transparent 70%)" }}
               aria-hidden
             />
+
+            {/* Product shot — full-bleed background */}
+            <div className="pointer-events-none absolute inset-0" aria-hidden>
+              <Image
+                src="/images/homepage-cta.webp"
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 1200px"
+                className="object-cover object-right"
+              />
+              {/* Keep the copy legible over the shot */}
+              <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/30" />
+            </div>
 
             <div className="relative max-w-2xl">
               <span className="eyebrow text-accent-soft">Find your fit</span>

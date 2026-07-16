@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { SITE, NAV_LINKS } from "@/constants/site";
+import { MapPin } from "lucide-react";
+import { SITE, NAV_LINKS, LOCATIONS } from "@/constants/site";
 import { CATEGORIES } from "@/constants/categories";
-import { EnquireButton } from "@/components/common/EnquireButton";
 
 const footerCols = [
   {
@@ -38,19 +38,38 @@ export function Footer() {
       <div className="container py-16 md:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_2fr]">
           <div>
-            <Image
-              src="/images/logo.webp"
-              alt={SITE.name}
-              width={160}
-              height={21}
-              className="h-7 w-auto object-contain"
-            />
-            <p className="mt-4 max-w-sm text-muted leading-relaxed">
-              Ergonomic seating and workspaces engineered around how the body
-              actually moves.
-            </p>
-            <div className="mt-6">
-              <EnquireButton variant="primary" withArrow label="Start an enquiry" />
+            {/* Locations */}
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-1">
+              {LOCATIONS.map((loc) => (
+                <div key={loc.label}>
+                  <p className="eyebrow mb-2.5">{loc.label}</p>
+                  <p className="text-sm font-medium text-ink">{loc.name}</p>
+                  <address className="mt-1.5 text-sm not-italic leading-relaxed text-muted">
+                    {loc.lines.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </address>
+                  <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm">
+                    <a
+                      href={`tel:${loc.phone.replace(/\s/g, "")}`}
+                      className="text-muted transition-colors hover:text-ink"
+                    >
+                      {loc.phone}
+                    </a>
+                    <a
+                      href={loc.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-medium text-accent"
+                    >
+                      <MapPin size={13} />
+                      Get directions
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -76,12 +95,12 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-6 border-t border-line pt-8 md:flex-row md:items-center md:justify-between">
-          <div className="text-sm text-muted">
-            <p>{SITE.address.line1}, {SITE.address.line2}</p>
-            <p>
-              {SITE.email} · {SITE.phone}
-            </p>
-          </div>
+          <a
+            href={`mailto:${SITE.email}`}
+            className="text-sm text-muted transition-colors hover:text-ink"
+          >
+            {SITE.email}
+          </a>
           <div className="flex items-center gap-5">
             {SITE.social.map((s) => (
               <a
@@ -98,6 +117,17 @@ export function Footer() {
         <div className="mt-8 flex flex-col gap-2 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {SITE.name} Studio. All rights reserved.</p>
           <p className="display tracking-widest">{SITE.tagline.toUpperCase()}</p>
+        </div>
+
+        {/* Wordmark sign-off */}
+        <div className="mt-8 flex justify-center border-t border-line pt-8 -mb-6">
+          <Image
+            src="/images/logo.webp"
+            alt={SITE.name}
+            width={640}
+            height={84}
+            className="h-10 w-auto object-contain opacity-80 md:h-14"
+          />
         </div>
       </div>
     </footer>

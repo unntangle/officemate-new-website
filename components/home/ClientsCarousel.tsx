@@ -3,38 +3,40 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+/* Filenames are extension-less; the .webp is applied at the call site so the
+   list survives any future format change. */
 const CLIENT_LOGOS = [
-  "access-healthcare.png",
-  "ags-health.png",
-  "asv.png",
-  "basshyaam.png",
-  "bosch.png",
-  "cure.png",
-  "daimler.png",
-  "danfoss.png",
-  "data-patterns.png",
-  "flipkart.png",
-  "freshworks.png",
-  "ge.png",
-  "hitachi.png",
-  "mahindra.png",
-  "nestle.png",
-  "puma.png",
-  "renault.png",
-  "royal-enfield.png",
-  "saint-gobain.png",
-  "schneider.png",
-  "start-health.png",
-  "sutherland.png",
-  "synergy.png",
-  "tafe.png",
-  "tata.png",
-  "trimble.png",
-  "tvh.png",
-  "visteon.png",
-  "yamaha.png",
-  "zee.png",
-  "zf.png",
+  "access-healthcare",
+  "ags-health",
+  "asv",
+  "basshyaam",
+  "bosch",
+  "cure",
+  "daimler",
+  "danfoss",
+  "data-patterns",
+  "flipkart",
+  "freshworks",
+  "ge",
+  "hitachi",
+  "mahindra",
+  "nestle",
+  "puma",
+  "renault",
+  "royal-enfield",
+  "saint-gobain",
+  "schneider",
+  "start-health",
+  "sutherland",
+  "synergy",
+  "tafe",
+  "tata",
+  "trimble",
+  "tvh",
+  "visteon",
+  "yamaha",
+  "zee",
+  "zf",
 ];
 
 export function ClientsCarousel() {
@@ -55,8 +57,8 @@ export function ClientsCarousel() {
               >
                 <div className="relative w-full h-full">
                   <Image
-                    src={`/images/clients/${logo}`}
-                    alt={`${logo.replace(".png", "")} logo`}
+                    src={`/images/clients/${logo}.webp`}
+                    alt={`${logo} logo`}
                     fill
                     className="object-contain drop-shadow-sm"
                     sizes="(max-width: 768px) 160px, 224px"
@@ -73,8 +75,8 @@ export function ClientsCarousel() {
               >
                 <div className="relative w-full h-full">
                   <Image
-                    src={`/images/clients/${logo}`}
-                    alt={`${logo.replace(".png", "")} logo`}
+                    src={`/images/clients/${logo}.webp`}
+                    alt={`${logo} logo`}
                     fill
                     className="object-contain drop-shadow-sm"
                     sizes="(max-width: 768px) 160px, 224px"

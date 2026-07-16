@@ -3,23 +3,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { Product } from "@/types";
 
 import { categoryName } from "@/constants/categories";
+import { PRODUCT_IMAGES } from "@/constants/products";
+import { Button } from "@/components/ui/button";
 import { EnquireButton } from "@/components/common/EnquireButton";
+import { HealthScoreBadge } from "@/components/common/HealthScoreBadge";
 import { ProductRender } from "@/components/common/ProductRender";
-
-/**
- * Map of slug → public image path.
- * Add an entry here whenever a real product photo is available.
- */
-const PRODUCT_IMAGES: Record<string, string> = {
-  zenpro:   "/images/products/chairs/zenpro.png",
-  jupiter:  "/images/products/chairs/Jupiter.png",
-  webstar:  "/images/products/chairs/webstar.jpg",
-  ferro:    "/images/products/chairs/ferro.jpg",
-  altura:   "/images/products/chairs/altura.png",
-};
 
 export function ProductCard({ product }: { product: Product }) {
   const imageSrc = PRODUCT_IMAGES[product.slug];
@@ -55,6 +47,8 @@ export function ProductCard({ product }: { product: Product }) {
             />
           )}
         </div>
+
+        <HealthScoreBadge slug={product.slug} className="absolute left-3 top-3 z-10" />
       </Link>
 
       {/* Text content */}
@@ -69,12 +63,21 @@ export function ProductCard({ product }: { product: Product }) {
         </Link>
         <p className="mt-1.5 line-clamp-2 text-sm text-muted">{product.tagline}</p>
 
-        <div className="mt-auto pt-5">
+        <div className="mt-auto flex gap-2 pt-5">
+          <Button asChild variant="primary" size="sm" className="flex-1 group/view">
+            <Link href={`/products/${product.slug}`}>
+              View
+              <ArrowUpRight
+                size={14}
+                className="transition-transform duration-300 group-hover/view:translate-x-0.5 group-hover/view:-translate-y-0.5"
+              />
+            </Link>
+          </Button>
           <EnquireButton
             product={product.name}
             size="sm"
             variant="outline"
-            className="w-full"
+            className="flex-1"
           />
         </div>
       </div>

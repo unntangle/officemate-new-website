@@ -11,14 +11,14 @@ import { EASE } from "@/lib/motion";
 
 const SLIDES = [
   {
-    src: "/images/hero.png",
+    src: "/images/hero.webp",
     alt: "Ergonomic office chairs for every workspace",
     heading: "Ergonomic Office Chairs for Every Workspace",
     sub: "Modular office furniture, engineered for enterprise scale.",
     category: "Task Chairs",
   },
   {
-    src: "/images/hero2.png",
+    src: "/images/hero2.webp",
     alt: "Premium ergonomic office seating",
     heading: "Premium Seating Engineered for Productivity",
     sub: "Designed from posture data — not mood boards. Built to last a decade.",
