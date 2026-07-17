@@ -97,6 +97,25 @@ export function Navbar() {
   /* Never hide the bar while a menu is open */
   const isHidden = hidden && !megaOpen && !moreOpen && !mobileOpen;
 
+  /* Hover only counts once the bar has settled.
+
+     Scrolling up animates the bar back down onto wherever the cursor already
+     is. The pointer never moves, but the element arrives underneath it, and the
+     browser reports that as a hover — which sprang the menus open on their own.
+     Two guards, because either alone leaves a gap: the triggers open on
+     mousemove rather than mouseenter, so a stationary cursor can't open
+     anything; and hover is disarmed across the reveal in case a browser
+     synthesises a move as the page settles. */
+  const hoverArmed = useRef(true);
+  useEffect(() => {
+    hoverArmed.current = false;
+    /* Just past the 300ms reveal transition. */
+    const t = setTimeout(() => {
+      hoverArmed.current = true;
+    }, 350);
+    return () => clearTimeout(t);
+  }, [isHidden]);
+
   /* Product detail pages carry the bar edge-to-edge rather than as a
      floating pill — the gallery already starts near the top of the page. */
   const isProductDetail = /^\/products\/[^/]+$/.test(pathname);
@@ -124,7 +143,9 @@ export function Navbar() {
         "fixed top-0 left-0 right-0 z-50 bg-transparent",
         isProductDetail ? "p-0" : "py-3 px-4 md:px-6",
         "transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform",
-        isHidden ? "-translate-y-full" : "translate-y-0"
+        /* pointer-events-none while parked: an off-screen bar shouldn't be
+           catching hovers meant for the page. */
+        isHidden ? "-translate-y-full pointer-events-none" : "translate-y-0"
       )}
       onMouseLeave={() => {
         setMegaOpen(false);
@@ -166,7 +187,8 @@ export function Navbar() {
               return (
                 <button
                   key={link.href}
-                  onMouseEnter={() => {
+                  onMouseMove={() => {
+                    if (!hoverArmed.current) return;
                     setMegaOpen(true);
                     setMoreOpen(false);
                   }}
@@ -204,7 +226,8 @@ export function Navbar() {
           {/* More dropdown trigger */}
           <div ref={moreRef} className="relative h-full flex items-center">
             <button
-              onMouseEnter={() => {
+              onMouseMove={() => {
+                if (!hoverArmed.current) return;
                 setMoreOpen(true);
                 setMegaOpen(false);
               }}
