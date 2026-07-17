@@ -577,8 +577,8 @@ export const PRODUCTS: Product[] = [
       "Zenpro is engineered for the deep-work hours when comfort can't be an afterthought. A tri-zone mesh backrest targets shoulders, mid-back and lumbar independently, while a waterfall seat edge reduces thigh pressure so circulation stays strong through long sittings.",
     swatch: "#2B2B2E",
     colors: [
-      { name: "Charcoal", hex: "#2B2B2E" },
-      { name: "Fog", hex: "#C9CCD1" },
+      { name: "Black", hex: "#2B2B2E" },
+      { name: "Grey", hex: "#C9CCD1" },
     ],
     badges: ["Tri-zone mesh", "Waterfall seat", "3D lumbar"],
     features: [
@@ -1064,9 +1064,25 @@ export const PRODUCT_IMAGES: Record<string, string> = {
 };
 
 /**
+ * Feature panels — the annotated diagram shots. These illustrate mechanisms
+ * rather than finishes, so they're shared across every colourway and appended
+ * to whichever product shots are showing.
+ */
+const ZENPRO_PANELS = [
+  "/images/products/chairs/Zenpro/1.webp",
+  "/images/products/chairs/Zenpro/2.webp",
+  "/images/products/chairs/Zenpro/3.webp",
+  "/images/products/chairs/Zenpro/4.webp",
+  "/images/products/chairs/Zenpro/5.webp",
+];
+
+/**
  * Map of slug → multiple public image paths, in display order.
  * When a slug appears here the product gallery shows these as switchable
  * views with thumbnails; otherwise it falls back to PRODUCT_IMAGES.
+ *
+ * This is the default set — used when a product has no per-colour photography,
+ * or when the selected colour isn't in PRODUCT_COLOR_GALLERIES below.
  */
 export const PRODUCT_GALLERIES: Record<string, string[]> = {
   /* Product shots first, then the feature panels.
@@ -1078,17 +1094,63 @@ export const PRODUCT_GALLERIES: Record<string, string[]> = {
     "/images/products/chairs/Zenpro/Side.webp",
     "/images/products/chairs/Zenpro/Rear%20Perspective.webp",
     "/images/products/chairs/Zenpro/Rear.webp",
-    "/images/products/chairs/Zenpro/1.webp",
-    "/images/products/chairs/Zenpro/2.webp",
-    "/images/products/chairs/Zenpro/3.webp",
-    "/images/products/chairs/Zenpro/4.webp",
-    "/images/products/chairs/Zenpro/5.webp",
+    ...ZENPRO_PANELS,
+  ],
+};
+
+/**
+ * Per-colourway photography, keyed `slug:Colour name`. The colour name must
+ * match `Product.colors[].name` exactly — that's what the picker passes in.
+ * Falls back to PRODUCT_GALLERIES when a colour has no dedicated shots yet.
+ */
+export const PRODUCT_COLOR_GALLERIES: Record<string, string[]> = {
+  "zenpro:Black": [
+    "/images/products/chairs/Zenpro/black/front.jpg",
+    "/images/products/chairs/Zenpro/black/front-perspective.jpg",
+    "/images/products/chairs/Zenpro/black/side.jpg",
+    "/images/products/chairs/Zenpro/black/rear-perspective.jpg",
+    "/images/products/chairs/Zenpro/black/rear.jpg",
+    ...ZENPRO_PANELS,
   ],
 };
 
 /** Every photo for a product, richest source first. */
-export const galleryFor = (slug: string): string[] =>
-  PRODUCT_GALLERIES[slug] ?? (PRODUCT_IMAGES[slug] ? [PRODUCT_IMAGES[slug]] : []);
+export const galleryFor = (slug: string, color?: string): string[] => {
+  const byColor = color ? PRODUCT_COLOR_GALLERIES[`${slug}:${color}`] : undefined;
+  return (
+    byColor ??
+    PRODUCT_GALLERIES[slug] ??
+    (PRODUCT_IMAGES[slug] ? [PRODUCT_IMAGES[slug]] : [])
+  );
+};
+
+/**
+ * 3D / AR assets, keyed `slug:Colour name` to match PRODUCT_COLOR_GALLERIES.
+ *
+ * `glb` drives both the in-page 3D viewer and Android's Scene Viewer.
+ * `usdz` is iOS-only — Quick Look won't read a .glb, so without it the
+ * "View in room" button stays hidden on iPhone and iPad. Everything degrades
+ * on its own: no entry here means no buttons, rather than dead controls.
+ */
+export type ProductModel = {
+  /** glTF binary — in-page 3D and Android AR. */
+  glb: string;
+  /** USDZ — required for iOS AR (Quick Look). */
+  usdz?: string;
+};
+
+export const PRODUCT_MODELS: Record<string, ProductModel> = {
+  "zenpro:Black": {
+    glb: "/images/products/chairs/Zenpro/black/zen-pro-black.glb",
+  },
+  "zenpro:Grey": {
+    glb: "/images/products/chairs/Zenpro/zen-pro-grey.glb",
+  },
+};
+
+/** The 3D asset for a colourway, if one has been exported. */
+export const modelFor = (slug: string, color?: string): ProductModel | undefined =>
+  color ? PRODUCT_MODELS[`${slug}:${color}`] : undefined;
 
 /** Products belonging to a category, photographed ones first. */
 export const productsByCategory = (slug: string) =>

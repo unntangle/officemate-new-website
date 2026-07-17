@@ -4,6 +4,54 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Running neon outline — a light that travels around an element's border.
+   @property is what makes this work: a plain custom property is a string to
+   the animation engine and would jump 0→360 in one step, so the angle has to
+   be registered as an <angle> before it can be interpolated. */
+@property --neon-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes neon-run {
+  to {
+    --neon-angle: 360deg;
+  }
+}
+
+/* AR how-to illustration. Both loops share a 2.4s period so the chair lands
+   as the reticle pulses, reading as one gesture rather than two. */
+@keyframes ar-reticle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes ar-place {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  34%,
+  82% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  96%,
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
 @layer base {
   :root {
     color-scheme: light;
@@ -67,7 +115,7 @@
     position: relative;
     background: transparent;
   }
-  
+
   .glass::before {
     content: "";
     position: absolute;
@@ -128,6 +176,66 @@
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: saturate(200%) blur(32px);
     -webkit-backdrop-filter: saturate(200%) blur(32px);
+  }
+
+  /* A blue light chasing the border, on hover only. The conic gradient is
+     mostly transparent — only the last ~70° carries colour, which is the
+     travelling segment — and the mask pair hides everything but a 1.5px ring
+     at the edge, so the centre stays clear for the button's own background. */
+  .neon-ring {
+    position: relative;
+  }
+
+  .neon-ring::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--neon-angle),
+      transparent 0deg 290deg,
+      rgba(47, 111, 235, 0.25) 322deg,
+      #2f6feb 352deg,
+      #9dc0ff 360deg
+    );
+    /* Paint the padding box, then subtract it — what's left is the ring. */
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    /* The glow. Applied to the masked ring, so only the lit segment blooms. */
+    filter: drop-shadow(0 0 3px rgba(47, 111, 235, 0.9));
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  /* focus-visible as well as hover — the light is a discovery cue, and a
+     keyboard user arriving at the button deserves the same one. */
+  .neon-ring:hover::before,
+  .neon-ring:focus-visible::before {
+    opacity: 1;
+    animation: neon-run 2.8s linear infinite;
+  }
+
+  /* transform-box is the part that's easy to miss: without it an SVG child
+     transforms about the root viewBox origin, not its own centre, and the
+     scale throws the shape across the canvas. */
+  .ar-reticle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ar-reticle 2.4s ease-in-out infinite;
+  }
+
+  .ar-place {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: ar-place 2.4s ease-in-out infinite;
   }
 }
 

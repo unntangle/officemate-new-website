@@ -19,13 +19,14 @@ import {
 import { PRODUCTS, getProduct, getRelated } from "@/constants/products";
 import { categoryName } from "@/constants/categories";
 import { SITE } from "@/constants/site";
-import { formatPrice, cn } from "@/lib/utils";
 import { Reveal } from "@/components/common/Reveal";
 import { Accordion } from "@/components/common/Accordion";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { EnquireButton } from "@/components/common/EnquireButton";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProductGallery } from "@/components/products/ProductGallery";
+import { ColorProvider } from "@/components/products/ColorProvider";
+import { ColorPicker } from "@/components/products/ColorPicker";
 import { StickyEnquiry } from "@/components/products/StickyEnquiry";
 
 export function generateStaticParams() {
@@ -81,10 +82,6 @@ export default async function ProductDetailPage({
     (p) => p.slug !== product.slug
   );
 
-  const discount = product.compareAtPrice
-    ? Math.round((1 - product.price / product.compareAtPrice) * 100)
-    : 0;
-
   /* Buy-column panels. Every one is drawn from real product data — nothing
      here is invented copy. */
   const detailPanels = [
@@ -127,131 +124,86 @@ export default async function ProductDetailPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Overview */}
-      <section className="container grid gap-8 lg:grid-cols-[auto_minmax(0,36rem)] lg:gap-12">
-        <ProductGallery
-          slug={product.slug}
-          category={product.category}
-          color={product.swatch}
-          name={product.name}
-        />
+      {/* Overview — ColorProvider shares the selected colourway between the
+          gallery and the picker. Children stay server-rendered. */}
+      <ColorProvider colors={product.colors}>
+        <section className="container grid gap-8 lg:grid-cols-[auto_minmax(0,36rem)] lg:gap-12">
+          <ProductGallery
+            slug={product.slug}
+            category={product.category}
+            name={product.name}
+          />
 
-        <div className="lg:py-4">
-          <span className="eyebrow block">
-            {categoryName(product.category)}
-          </span>
-          <h1 className="display mt-2 text-3xl font-semibold leading-[1.05] text-ink sm:text-4xl md:text-[2.75rem]">
-            {product.name}
-          </h1>
-
-          <p className="mt-4 text-lg leading-relaxed text-muted">
-            {product.tagline}
-          </p>
-
-          {/* Price */}
-          <div className="mt-6 flex flex-wrap items-center gap-2.5">
-            <span className="display text-3xl font-semibold text-ink">
-              {formatPrice(product.price)}
+          <div className="lg:py-4">
+            <span className="eyebrow block">
+              {categoryName(product.category)}
             </span>
-            {product.compareAtPrice && (
-              <>
-                <span className="text-sm text-muted">
-                  MRP{" "}
-                  <span className="line-through">
-                    {formatPrice(product.compareAtPrice)}
-                  </span>
-                </span>
-                <span className="rounded-md bg-sage px-2 py-1 text-xs font-bold text-white">
-                  {discount}% OFF
-                </span>
-              </>
-            )}
-            <span className="text-sm text-muted">(incl. of all taxes)</span>
-          </div>
+            <h1 className="display mt-2 text-3xl font-semibold leading-[1.05] text-ink sm:text-4xl md:text-[2.75rem]">
+              {product.name}
+            </h1>
 
-          {/* Colours */}
-          <div className="mt-6 rounded-2xl border border-line p-5">
-            <p className="text-sm text-muted">
-              Colour:{" "}
-              <span className="font-semibold text-ink">
-                {product.colors[0]?.name}
-              </span>
+            <p className="mt-4 text-lg leading-relaxed text-muted">
+              {product.tagline}
             </p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              {product.colors.map((c, i) => (
-                <span
-                  key={c.name}
-                  title={c.name}
-                  className={cn(
-                    "flex h-12 w-12 items-center justify-center rounded-full transition",
-                    i === 0
-                      ? "ring-2 ring-accent"
-                      : "ring-1 ring-line hover:ring-ink/40"
-                  )}
+
+            {/* Colours */}
+            <ColorPicker />
+
+            {/* CTA */}
+            <div className="mt-6">
+              <EnquireButton
+                product={product.name}
+                variant="accent"
+                size="lg"
+                withArrow
+                className="w-full hover:shadow-none"
+              />
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                <EnquireButton
+                  product={`${product.name} — book a demo`}
+                  variant="outline"
+                  size="lg"
+                  label="Live demo"
+                />
+                <a
+                  href={`tel:${SITE.phone.replace(/\s/g, "")}`}
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line text-sm font-semibold text-ink transition-colors hover:border-ink"
+                >
+                  <Phone size={16} />
+                  Connect now
+                </a>
+              </div>
+            </div>
+
+            {/* Trust row */}
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {TRUST.map(({ icon: Icon, label, tile }) => (
+                <div
+                  key={label}
+                  className="flex flex-col items-center gap-2 rounded-2xl bg-surface px-3 py-4 text-center"
                 >
                   <span
-                    className="h-9 w-9 rounded-full"
-                    style={{ backgroundColor: c.hex }}
-                  />
-                </span>
+                    className={`flex h-9 w-9 items-center justify-center rounded-full ${tile}`}
+                  >
+                    <Icon size={16} />
+                  </span>
+                  <span className="text-xs font-medium text-muted">{label}</span>
+                </div>
               ))}
             </div>
-          </div>
 
-          {/* CTA */}
-          <div className="mt-6">
-            <EnquireButton
-              product={product.name}
-              variant="accent"
-              size="lg"
-              withArrow
-              className="w-full hover:shadow-none"
-            />
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              <EnquireButton
-                product={`${product.name} — book a demo`}
-                variant="outline"
-                size="lg"
-                label="Live demo"
+            {/* Detail panels — the long-form copy, folded away until asked for */}
+            <div className="mt-6 rounded-2xl border border-line px-5">
+              <Accordion
+                items={detailPanels}
+                variant="divided"
+                defaultOpen={null}
+                className="border-y-0"
               />
-              <a
-                href={`tel:${SITE.phone.replace(/\s/g, "")}`}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line text-sm font-semibold text-ink transition-colors hover:border-ink"
-              >
-                <Phone size={16} />
-                Connect now
-              </a>
             </div>
           </div>
-
-          {/* Trust row */}
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
-            {TRUST.map(({ icon: Icon, label, tile }) => (
-              <div
-                key={label}
-                className="flex flex-col items-center gap-2 rounded-2xl bg-surface px-3 py-4 text-center"
-              >
-                <span
-                  className={`flex h-9 w-9 items-center justify-center rounded-full ${tile}`}
-                >
-                  <Icon size={16} />
-                </span>
-                <span className="text-xs font-medium text-muted">{label}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Detail panels — the long-form copy, folded away until asked for */}
-          <div className="mt-6 rounded-2xl border border-line px-5">
-            <Accordion
-              items={detailPanels}
-              variant="divided"
-              defaultOpen={null}
-              className="border-y-0"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
+      </ColorProvider>
 
       {/* Description */}
       <section id="overview" className="section scroll-mt-24">

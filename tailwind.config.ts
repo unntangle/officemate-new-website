@@ -40,6 +40,14 @@ const config: Config = {
           soft: "#F0ECF8",
           ink: "#4B3F72",
         },
+        /* Utility blue for viewer controls (3D / AR). Deliberately outside the
+           brand red: these are tools for inspecting the product, not calls to
+           action, and reading them as "buy" would be wrong. */
+        azure: {
+          DEFAULT: "#2F6FEB",
+          soft: "#E8F0FE",
+          ink: "#1A46A8",
+        },
         /* Warm neutral used for full-width section grounds. */
         cream: "#FBF6EC",
         walnut: "#6D4C41",

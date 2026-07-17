@@ -1,35 +1,85 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Box, Scan } from "lucide-react";
 import type { CategorySlug } from "@/types";
-import { galleryFor } from "@/constants/products";
+import { galleryFor, modelFor } from "@/constants/products";
 import { cn } from "@/lib/utils";
 import { ProductRender } from "@/components/common/ProductRender";
+import { useProductColor } from "@/components/products/ColorProvider";
+import { ModelViewerOverlay } from "@/components/products/ModelViewerOverlay";
 
 const RENDER_VARIANTS = [0, 1, 2, 3];
 
 export function ProductGallery({
   slug,
   category,
-  color,
   name,
 }: {
   slug: string;
   category: CategorySlug;
-  color: string;
   name: string;
 }) {
+  const { active: activeColor } = useProductColor();
   const [active, setActive] = useState(0);
   const [preview, setPreview] = useState(false);
 
-  /* Real photography when it exists; the generated render only as a fallback. */
-  const photos = galleryFor(slug);
+  /* The preview portals into <body>, which doesn't exist during SSR — so gate
+     it until after mount rather than reaching for document on the server. */
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  /* Real photography when it exists — colour-specific shots first, then the
+     product's default set; the generated render only as a last resort. */
+  const photos = galleryFor(slug, activeColor.name);
   const hasPhotos = photos.length > 0;
   const views = hasPhotos ? photos.map((_, i) => i) : RENDER_VARIANTS;
   const current = Math.min(active, views.length - 1);
+
+  /* Back to the front view when the colourway changes — otherwise you'd stay
+     on, say, view 4 of a set that may be ordered differently. */
+  useEffect(() => {
+    setActive(0);
+  }, [activeColor.name]);
+
+  const color = activeColor.hex;
+
+  /* 3D asset for the selected colourway — undefined when none is exported,
+     which is what keeps the buttons from rendering as dead controls. */
+  const model = modelFor(slug, activeColor.name);
+  const [viewer, setViewer] = useState<null | { ar: boolean }>(null);
+
+  /* The 3D / AR rail. Rendered beside the shot on desktop and beneath it on
+     mobile, so it's declared once and placed twice. */
+  const ViewActions = ({ className }: { className?: string }) =>
+    model ? (
+      <div className={className}>
+        <button
+          onClick={() => setViewer({ ar: false })}
+          className="neon-ring flex w-full flex-col items-center justify-center gap-1.5 rounded-xl bg-card px-3 py-4 text-ink ring-1 ring-ink/15 transition-all duration-200 hover:ring-ink/40 lg:w-[4.75rem]"
+        >
+          <Box size={20} strokeWidth={1.5} className="text-azure" />
+          <span className="text-[0.625rem] font-semibold uppercase tracking-wide">
+            3D view
+          </span>
+        </button>
+
+        <button
+          onClick={() => setViewer({ ar: true })}
+          className="neon-ring flex w-full flex-col items-center justify-center gap-1.5 rounded-xl bg-card px-3 py-4 text-ink ring-1 ring-ink/15 transition-all duration-200 hover:ring-ink/40 lg:w-[4.75rem]"
+        >
+          <Scan size={20} strokeWidth={1.5} className="text-azure" />
+          <span className="text-center text-[0.625rem] font-semibold uppercase leading-tight tracking-wide">
+            View in
+            <br />
+            room
+          </span>
+        </button>
+      </div>
+    ) : null;
 
   const step = useCallback(
     (dir: number) => setActive((i) => (i + dir + views.length) % views.length),
@@ -154,7 +204,13 @@ export function ProductGallery({
             </>
           )}
         </div>
+
+        {/* 3D / AR — vertical rail to the right of the shot on desktop */}
+        <ViewActions className="hidden shrink-0 flex-col justify-center gap-3 lg:flex" />
       </div>
+
+      {/* 3D / AR — side-by-side beneath the shot on mobile */}
+      <ViewActions className="mt-3 grid grid-cols-2 gap-2 lg:hidden" />
 
       {/* Thumbnail row — horizontal below the shot on mobile */}
       {views.length > 1 && (
@@ -165,86 +221,105 @@ export function ProductGallery({
         </div>
       )}
 
-      {/* Preview */}
-      <AnimatePresence>
-        {preview && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setPreview(false)}
-            className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/90 p-4 backdrop-blur-sm md:p-10"
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${name} preview`}
-          >
-            <button
-              onClick={() => setPreview(false)}
-              aria-label="Close preview"
-              className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
-            >
-              <X size={20} />
-            </button>
-
-            {/* The shot itself — contained here, so nothing is cropped */}
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative h-full w-full max-w-4xl"
-            >
-              {hasPhotos ? (
-                <Image
-                  src={photos[current]}
-                  alt={`${name} — view ${current + 1}`}
-                  fill
-                  sizes="100vw"
-                  className="object-contain"
-                />
-              ) : (
-                <ProductRender
-                  category={category}
-                  color={color}
-                  variant={current}
-                  blueprint={current === RENDER_VARIANTS.length - 1}
-                  label={`${name} — view ${current + 1}`}
-                />
-              )}
-            </motion.div>
-
-            {views.length > 1 && (
-              <>
+      {/* Preview — portalled to <body>. The wrapper above is `lg:sticky`,
+         which always creates a stacking context, so left in place the overlay
+         would be trapped inside it and render beneath the fixed navbar no
+         matter how high its z-index went. */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {preview && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setPreview(false)}
+                className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/90 p-4 backdrop-blur-sm md:p-10"
+                role="dialog"
+                aria-modal="true"
+                aria-label={`${name} preview`}
+              >
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    step(-1);
-                  }}
-                  aria-label="Previous view"
-                  className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+                  onClick={() => setPreview(false)}
+                  aria-label="Close preview"
+                  className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
-                  <ChevronLeft size={20} />
+                  <X size={20} />
                 </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    step(1);
-                  }}
-                  aria-label="Next view"
-                  className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+
+                {/* The shot itself — contained here, so nothing is cropped */}
+                <motion.div
+                  key={current}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative h-full w-full max-w-4xl"
                 >
-                  <ChevronRight size={20} />
-                </button>
-                <span className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white">
-                  {current + 1} / {views.length}
-                </span>
-              </>
+                  {hasPhotos ? (
+                    <Image
+                      src={photos[current]}
+                      alt={`${name} — view ${current + 1}`}
+                      fill
+                      sizes="100vw"
+                      className="object-contain"
+                    />
+                  ) : (
+                    <ProductRender
+                      category={category}
+                      color={color}
+                      variant={current}
+                      blueprint={current === RENDER_VARIANTS.length - 1}
+                      label={`${name} — view ${current + 1}`}
+                    />
+                  )}
+                </motion.div>
+
+                {views.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        step(-1);
+                      }}
+                      aria-label="Previous view"
+                      className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        step(1);
+                      }}
+                      aria-label="Next view"
+                      className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                    <span className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white">
+                      {current + 1} / {views.length}
+                    </span>
+                  </>
+                )}
+              </motion.div>
             )}
-          </motion.div>
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
+
+      {/* 3D / AR viewer. Mounted only on demand — it pulls in both the
+         model-viewer library and a ~25MB .glb, so it stays off the page until
+         someone actually asks for it. */}
+      {viewer && model && (
+        <ModelViewerOverlay
+          model={model}
+          name={name}
+          autoAR={viewer.ar}
+          onClose={() => setViewer(null)}
+        />
+      )}
     </div>
   );
 }

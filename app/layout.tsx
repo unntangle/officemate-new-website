@@ -27,6 +27,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: SITE.name }],
   alternates: { canonical: "/" },
+  /* Served straight from /public rather than the app/icon.png convention, so
+     the asset stays where the rest of the imagery lives. `apple` is the
+     home-screen icon on iOS, which ignores the standard rel="icon". */
+  icons: {
+    icon: "/images/fav-icon.png",
+    shortcut: "/images/fav-icon.png",
+    apple: "/images/fav-icon.png",
+  },
   openGraph: {
     type: "website",
     title: `${SITE.name} — ${SITE.tagline}`,
