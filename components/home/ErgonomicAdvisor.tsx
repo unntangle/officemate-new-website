@@ -67,9 +67,14 @@ export function ErgonomicAdvisor() {
   const q = getQuestion("hours");
 
   const [picked, setPicked] = useState<AdvisorOption | null>(null);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    []
+  );
 
   const choose = (option: AdvisorOption) => {
     if (picked) return;
