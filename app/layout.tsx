@@ -13,7 +13,7 @@ import { BackToTop } from "@/components/common/BackToTop";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} — ${SITE.tagline}`,
+    default: `${SITE.name} | Work Ergonomics`,
     template: `%s — ${SITE.name}`,
   },
   description: SITE.description,

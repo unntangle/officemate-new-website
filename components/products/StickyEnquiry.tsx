@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { formatPrice, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { EnquireButton } from "@/components/common/EnquireButton";
 
 /** Anchors mirror the section ids on the product detail page. */
@@ -93,19 +93,6 @@ export function StickyEnquiry({
               </div>
 
               <div className="flex shrink-0 items-center gap-4">
-                <span className="flex items-baseline gap-2 text-sm">
-                  {compareAtPrice && (
-                    <span className="text-white/50 line-through">
-                      {formatPrice(compareAtPrice)}
-                    </span>
-                  )}
-                  <span className="font-semibold text-white">
-                    {formatPrice(price)}
-                  </span>
-                  {compareAtPrice && (
-                    <span className="font-medium text-sage">on sale</span>
-                  )}
-                </span>
                 <EnquireButton
                   product={name}
                   variant="accent"
@@ -134,7 +121,6 @@ export function StickyEnquiry({
               size="lg"
               withArrow
               className="w-full"
-              label={`Enquire — ${formatPrice(price)}`}
             />
           </motion.div>
         )}

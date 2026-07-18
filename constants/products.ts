@@ -86,7 +86,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Set the seat height so your feet rest flat and your knees sit just below your hips. Slide the seat depth until two fingers fit behind your knees, then let the self-weighing recline do the rest.",
-    warranty: "12-year limited warranty on frame, mechanism and gas lift.",
+    warranty: "1-year limited warranty on frame, mechanism and gas lift.",
     care: [
       "Vacuum the knit back monthly with a soft brush head.",
       "Wipe the frame with a damp, lint-free cloth — avoid solvents.",
@@ -185,7 +185,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Adjust the lumbar pad to sit just above your belt line, then set seat height so your forearms rest level with the desk.",
-    warranty: "8-year limited warranty on frame and mechanism.",
+    warranty: "1-year limited warranty on frame and mechanism.",
     care: [
       "Dust the mesh weekly with a dry microfibre cloth.",
       "Spot-clean spills with mild soap and cool water.",
@@ -278,7 +278,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Recline lock is on the right paddle; use the free-glide range for reading and lock it upright for focused desk work.",
-    warranty: "12-year limited warranty; leather covered for 5 years.",
+    warranty: "1-year limited warranty on frame, mechanism and leather.",
     care: [
       "Condition the leather every 6 months with a pH-neutral balm.",
       "Keep out of direct sunlight to preserve the finish.",
@@ -374,7 +374,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Use the rocker lock for upright play; release it for a gentle tilt on breaks. Set the neck pillow so it meets the base of your skull, not your neck.",
-    warranty: "6-year limited warranty on frame and mechanism.",
+    warranty: "1-year limited warranty on frame and mechanism.",
     care: [
       "Wipe leatherette with a barely-damp cloth — never soak it.",
       "Keep away from radiators and direct sun.",
@@ -465,7 +465,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Set your sitting preset with elbows at 90° and standing preset so wrists stay flat. Alternate roughly every 45 minutes.",
-    warranty: "10-year limited warranty on frame and motors.",
+    warranty: "1-year limited warranty on frame and motors.",
     care: [
       "Wipe the top with a soft, damp cloth and dry immediately.",
       "Keep the motor housing free of dust and clutter.",
@@ -547,7 +547,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Position the cushion so the fullest part sits just above your belt line, then tension the strap so it stays put.",
-    warranty: "2-year limited warranty against foam breakdown.",
+    warranty: "1-year limited warranty against foam breakdown.",
     care: ["Unzip and machine-wash the cover cold.", "Air-dry the foam; do not tumble."],
     faqs: [
       {
@@ -634,7 +634,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Adjust the 3D lumbar so the pad sits just above your waistband. Set seat height so feet rest flat, then fine-tune armrests until your shoulders are relaxed.",
-    warranty: "10-year limited warranty on frame and mechanism.",
+    warranty: "1-year limited warranty on frame and mechanism.",
     care: [
       "Vacuum the mesh panels monthly using a soft brush attachment.",
       "Wipe the frame with a slightly damp cloth — avoid abrasive cleaners.",
@@ -729,7 +729,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Position the primary surface as your main monitor station and the return for secondary tasks or a second screen. Run cables through the rear spine before attaching the modesty panel.",
-    warranty: "7-year limited warranty on frame and top surface.",
+    warranty: "1-year limited warranty on frame and top surface.",
     care: [
       "Wipe the melamine surface with a damp cloth — avoid abrasive pads.",
       "Check levelling feet every 6 months on uneven floors.",
@@ -823,7 +823,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Route your HDMI and power cables through the AV channel before the pop-up modules are clipped in. Modules are tool-free snap-in and can be repositioned to any seat as needed.",
-    warranty: "8-year limited warranty on frame; 3 years on AV modules.",
+    warranty: "1-year limited warranty on frame and AV modules.",
     care: [
       "Wipe the top with a dry or lightly damp microfibre cloth.",
       "Clean pop-up modules with a dry cloth — no liquid inside the inserts.",
@@ -918,7 +918,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Set seat height so your knees sit at 90° and feet rest flat. For training-room use, the multi-lock tilt can be set upright to keep rows consistent.",
-    warranty: "8-year limited warranty on frame; 5 years on mechanism.",
+    warranty: "1-year limited warranty on frame and mechanism.",
     care: [
       "Wipe the frame with a dry cloth to prevent surface moisture.",
       "Spot-clean fabric with mild soap and cool water, then blot dry.",
@@ -1011,7 +1011,7 @@ export const PRODUCTS: Product[] = [
     ],
     usage:
       "Programme your sitting preset first, then raise to your standing height and save that second. Set the reminder timer to prompt you every 45 – 60 minutes to switch.",
-    warranty: "8-year limited warranty on frame and motor.",
+    warranty: "1-year limited warranty on frame and motor.",
     care: [
       "Wipe the bamboo top with a dry or lightly damp cloth — avoid standing water.",
       "Keep the motor housing clear of debris.",

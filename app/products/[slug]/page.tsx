@@ -57,7 +57,7 @@ export async function generateMetadata({
 
 /* Pastel tiles, cycled positionally — same device as the Stats band */
 const TRUST = [
-  { icon: ShieldCheck, label: "Up to 12-yr warranty", tile: "bg-sage-soft text-sage-ink" },
+  { icon: ShieldCheck, label: "1-yr warranty", tile: "bg-sage-soft text-sage-ink" },
   { icon: RotateCcw, label: "30-day trial", tile: "bg-honey-soft text-honey-ink" },
   { icon: Truck, label: "Free delivery", tile: "bg-lilac-soft text-lilac-ink" },
 ];

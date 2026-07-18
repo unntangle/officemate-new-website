@@ -69,7 +69,7 @@ export const NAV_LINKS = [
 export const STATS = [
   { value: 120000, suffix: "+", label: "Chairs shipped" },
   { value: 4.8, suffix: "/5", label: "Average rating", decimals: 1 },
-  { value: 12, suffix: "yr", label: "Longest warranty" },
+  { value: 1, suffix: "yr", label: "Warranty" },
   { value: 38, suffix: "", label: "Cities served" },
 ];
 
@@ -87,7 +87,7 @@ export const WHY_CHOOSE = [
   {
     title: "Warranty that means it",
     description:
-      "Up to twelve years on frames and mechanisms, because we expect the chair to outlast the desk.",
+      "One year on frames and mechanisms, because we stand behind every chair we ship.",
   },
   {
     title: "Try before you commit",
@@ -192,7 +192,7 @@ export const HOME_FAQS = [
   {
     question: "What does the warranty cover?",
     answer:
-      "Frames and mechanisms are covered for up to twelve years depending on the model. Wearing parts like castors and upholstery carry their own terms, listed on each product page.",
+      "Frames and mechanisms are covered for one year. Wearing parts like castors and upholstery carry their own terms, listed on each product page.",
   },
   {
     question: "How long is delivery?",
