@@ -1077,6 +1077,16 @@ const ZENPRO_PANELS = [
 ];
 
 /**
+ * Annotated feature panels for a product, in feature order — the close-up
+ * mechanism shots used by the Product Highlights carousel.
+ */
+export const PRODUCT_PANELS: Record<string, string[]> = {
+  zenpro: ZENPRO_PANELS,
+};
+
+export const panelsFor = (slug: string): string[] => PRODUCT_PANELS[slug] ?? [];
+
+/**
  * Map of slug → multiple public image paths, in display order.
  * When a slug appears here the product gallery shows these as switchable
  * views with thumbnails; otherwise it falls back to PRODUCT_IMAGES.

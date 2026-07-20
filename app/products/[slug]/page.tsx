@@ -11,12 +11,10 @@ import {
   ArrowRight,
   Ruler,
   Layers,
-  Armchair,
   Wind,
-  Move3d,
   Phone,
 } from "lucide-react";
-import { PRODUCTS, getProduct, getRelated } from "@/constants/products";
+import { PRODUCTS, getProduct, getRelated, galleryFor, panelsFor } from "@/constants/products";
 import { categoryName } from "@/constants/categories";
 import { SITE } from "@/constants/site";
 import { Reveal } from "@/components/common/Reveal";
@@ -25,6 +23,7 @@ import { SectionHeading } from "@/components/common/SectionHeading";
 import { EnquireButton } from "@/components/common/EnquireButton";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProductGallery } from "@/components/products/ProductGallery";
+import { ProductHighlights } from "@/components/products/ProductHighlights";
 import { ColorProvider } from "@/components/products/ColorProvider";
 import { ColorPicker } from "@/components/products/ColorPicker";
 import { StickyEnquiry } from "@/components/products/StickyEnquiry";
@@ -62,13 +61,6 @@ const TRUST = [
   { icon: Truck, label: "Free delivery", tile: "bg-lilac-soft text-lilac-ink" },
 ];
 
-const FEATURE_DECOR = [
-  { icon: Armchair, tile: "bg-sage-soft text-sage-ink" },
-  { icon: Move3d, tile: "bg-honey-soft text-honey-ink" },
-  { icon: Wind, tile: "bg-lilac-soft text-lilac-ink" },
-  { icon: ShieldCheck, tile: "bg-accent-soft text-accent" },
-];
-
 export default async function ProductDetailPage({
   params,
 }: {
@@ -81,6 +73,26 @@ export default async function ProductDetailPage({
   const related = getRelated(product.relatedSlugs).filter(
     (p) => p.slug !== product.slug
   );
+
+  /* Product Highlights — prefer the product's annotated feature panels (which
+     carry their own captions), and fall back to feature text paired with
+     gallery / stand-in photography for products that have no panels yet. */
+  const panels = panelsFor(product.slug);
+  const highlightPhotos = galleryFor(product.slug);
+  const highlightPool = highlightPhotos.length
+    ? highlightPhotos
+    : [
+        "/images/products/chairs/zenpro.webp",
+        "/images/products/chairs/altura.webp",
+        "/images/products/chairs/ferro.webp",
+      ];
+  const highlights = panels.length
+    ? panels.map((image) => ({ title: "", description: "", image }))
+    : product.features.map((f, i) => ({
+        title: f.title,
+        description: f.description,
+        image: highlightPool[i % highlightPool.length],
+      }));
 
   /* Buy-column panels. Every one is drawn from real product data — nothing
      here is invented copy. */
@@ -220,35 +232,8 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
-      {/* Key features */}
-      <section id="features" className="section scroll-mt-24 pt-0">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Key features"
-            title="Every adjustment earns its place"
-          />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            {product.features.map((f, i) => {
-              const { icon: Icon, tile } = FEATURE_DECOR[i % FEATURE_DECOR.length];
-              return (
-                <Reveal key={f.title} delay={i * 0.05}>
-                  <div className="h-full rounded-3xl bg-surface p-7 transition-shadow duration-300 hover:shadow-soft">
-                    <div
-                      className={`flex h-11 w-11 items-center justify-center rounded-2xl ${tile}`}
-                    >
-                      <Icon size={19} />
-                    </div>
-                    <h3 className="mt-5 text-lg font-bold text-ink">{f.title}</h3>
-                    <p className="mt-2 leading-relaxed text-muted">
-                      {f.description}
-                    </p>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* Product highlights */}
+      <ProductHighlights id="features" items={highlights} />
 
       {/* Benefits */}
       <section id="benefits" className="section scroll-mt-24 pt-0">

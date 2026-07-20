@@ -70,6 +70,7 @@ export function Navbar() {
   const [activeCat, setActiveCat] = useState<CategorySlug>(CATEGORIES[0].slug);
   const moreRef = useRef<HTMLDivElement>(null);
   const lastY = useRef(0);
+  const megaCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -137,6 +138,31 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
+  /* Products mega menu is open only while the pointer is on the Products
+     trigger or the panel itself. A short close delay bridges the small gap
+     between the two so crossing it doesn't flicker the menu shut. openMega
+     keeps the scroll-reveal guard (movement + armed) so the bar sliding back
+     under a stationary cursor can't spring it open. */
+  const openMega = () => {
+    if (!hoverArmed.current) return;
+    if (megaCloseTimer.current) clearTimeout(megaCloseTimer.current);
+    setMoreOpen(false);
+    setMegaOpen(true);
+  };
+  const cancelCloseMega = () => {
+    if (megaCloseTimer.current) clearTimeout(megaCloseTimer.current);
+  };
+  const closeMegaSoon = () => {
+    if (megaCloseTimer.current) clearTimeout(megaCloseTimer.current);
+    megaCloseTimer.current = setTimeout(() => setMegaOpen(false), 150);
+  };
+  useEffect(
+    () => () => {
+      if (megaCloseTimer.current) clearTimeout(megaCloseTimer.current);
+    },
+    []
+  );
+
   return (
     <header
       className={cn(
@@ -187,15 +213,16 @@ export function Navbar() {
               return (
                 <button
                   key={link.href}
-                  onMouseMove={() => {
-                    if (!hoverArmed.current) return;
-                    setMegaOpen(true);
-                    setMoreOpen(false);
+                  onMouseMove={openMega}
+                  onMouseEnter={cancelCloseMega}
+                  onMouseLeave={closeMegaSoon}
+                  onClick={() => {
+                    cancelCloseMega();
+                    setMegaOpen((v) => !v);
                   }}
-                  onClick={() => setMegaOpen((v) => !v)}
                   aria-expanded={megaOpen}
                   className={cn(
-                    "relative px-4 py-2 text-sm font-medium text-ink transition-colors hover:text-accent group",
+                    "relative px-4 py-2 text-sm font-medium text-black transition-colors hover:text-accent group",
                     megaOpen && "text-accent"
                   )}
                 >
@@ -214,7 +241,7 @@ export function Navbar() {
                 }}
                 className={cn(
                   "relative px-4 py-2 text-sm font-medium transition-colors hover:text-accent group",
-                  pathname === link.href ? "text-accent" : "text-ink"
+                  pathname === link.href ? "text-accent" : "text-black"
                 )}
               >
                 {link.label}
@@ -234,7 +261,7 @@ export function Navbar() {
               onClick={() => setMoreOpen((v) => !v)}
               aria-expanded={moreOpen}
               className={cn(
-                "relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-ink transition-colors hover:text-accent group",
+                "relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-black transition-colors hover:text-accent group",
                 moreOpen && "text-accent"
               )}
             >
@@ -266,7 +293,7 @@ export function Navbar() {
                         href={link.href}
                         className={cn(
                           "flex items-center px-5 py-2.5 text-sm font-medium transition-colors hover:text-accent group/more",
-                          pathname === link.href ? "text-accent" : "text-ink"
+                          pathname === link.href ? "text-accent" : "text-black"
                         )}
                       >
                         <span className="relative pb-0.5">
@@ -288,7 +315,7 @@ export function Navbar() {
             variant="primary"
             withArrow
             label="Enquire"
-            className="bg-ink text-white hover:bg-ink/90"
+            className="bg-black text-white hover:bg-ink"
           />
         </div>
 
@@ -309,7 +336,8 @@ export function Navbar() {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
             className="absolute left-0 right-0 mx-auto top-full mt-2 hidden md:block max-w-5xl w-full overflow-hidden rounded-2xl border border-ink/5 glass-light is-scrolled shadow-lift pointer-events-auto z-50"
-            onMouseEnter={() => setMegaOpen(true)}
+            onMouseEnter={cancelCloseMega}
+            onMouseLeave={closeMegaSoon}
           >
             <div className="relative z-10 grid grid-cols-[15rem_1fr]">
               {/* Left — category rail */}
@@ -377,7 +405,7 @@ export function Navbar() {
                         <Link
                           key={tile.key}
                           href={tile.href}
-                          className="group/tile flex aspect-[3/4] flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-ink/10 transition-all duration-300 hover:ring-2 hover:ring-accent hover:-translate-y-0.5"
+                          className="group/tile flex aspect-[3/4] flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-ink/10 transition-all duration-300 hover:ring-1 hover:ring-accent hover:-translate-y-0.5"
                         >
                           {/* Product shot — contained, never cropped */}
                           <div className="relative flex-1 overflow-hidden">

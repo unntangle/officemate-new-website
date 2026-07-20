@@ -10,7 +10,6 @@ import { categoryName } from "@/constants/categories";
 import { PRODUCT_IMAGES } from "@/constants/products";
 import { Button } from "@/components/ui/button";
 import { EnquireButton } from "@/components/common/EnquireButton";
-import { HealthScoreBadge } from "@/components/common/HealthScoreBadge";
 import { ProductRender } from "@/components/common/ProductRender";
 
 export function ProductCard({ product }: { product: Product }) {
@@ -47,8 +46,6 @@ export function ProductCard({ product }: { product: Product }) {
             />
           )}
         </div>
-
-        <HealthScoreBadge slug={product.slug} className="absolute left-3 top-3 z-10" />
       </Link>
 
       {/* Text content */}

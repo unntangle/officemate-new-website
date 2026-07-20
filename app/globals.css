@@ -223,6 +223,71 @@
     animation: neon-run 2.8s linear infinite;
   }
 
+  /* Running multi-colour gradient chip — the animated CTA in the header.
+     Same mechanism as .neon-ring (the registered --neon-angle drives a conic
+     gradient masked down to the border) but here the colour fills the whole
+     ring and runs continuously rather than only on hover. The drop-shadow on
+     the masked ring gives the soft outer bloom without a second element. */
+  .gradient-pill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.7rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    /* Crisp gradient border via two clipped backgrounds: the running conic
+       gradient painted on a real (transparent) border (border-box), over a
+       solid dark fill (padding-box). This anti-aliases rounded corners far
+       more cleanly than a masked ring, so no pixelated edges. */
+    border: 2px solid transparent;
+    background:
+      linear-gradient(#0b0b12, #0b0b12) padding-box,
+      conic-gradient(
+        from var(--neon-angle),
+        #ec4899,
+        #a855f7,
+        #6366f1,
+        #22d3ee,
+        #3b82f6,
+        #ec4899
+      ) border-box;
+    /* Soft coloured glow — an outset shadow sits behind the pill, so it never
+       rasterises the border edge the way a drop-shadow filter did. */
+    box-shadow: 0 0 14px -3px rgba(168, 85, 247, 0.55);
+    animation: neon-run 3s linear infinite;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .gradient-pill:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 20px -3px rgba(168, 85, 247, 0.8);
+  }
+
+  /* Circular running-gradient halo — the oAI avatar. Same crisp double-clip
+     border as .gradient-pill, kept round. */
+  .gradient-ring {
+    position: relative;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background:
+      linear-gradient(#0b0b12, #0b0b12) padding-box,
+      conic-gradient(
+        from var(--neon-angle),
+        #ec4899,
+        #a855f7,
+        #6366f1,
+        #22d3ee,
+        #3b82f6,
+        #ec4899
+      ) border-box;
+    box-shadow: 0 0 20px -4px rgba(168, 85, 247, 0.5);
+    animation: neon-run 3s linear infinite;
+  }
+
   /* transform-box is the part that's easy to miss: without it an SVG child
      transforms about the root viewBox origin, not its own centre, and the
      scale throws the shape across the canvas. */

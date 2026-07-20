@@ -11,7 +11,7 @@ const buttonVariants = cva(
         primary:
           "bg-black text-white hover:bg-[#2a2a2a] active:scale-[0.98]",
         accent:
-          "bg-accent text-white hover:shadow-accent active:scale-[0.98]",
+          "bg-accent text-white hover:bg-accent/90 active:scale-[0.98]",
         outline:
           "border border-line bg-transparent text-ink hover:border-ink hover:bg-white",
         ghost: "text-ink hover:bg-surface",

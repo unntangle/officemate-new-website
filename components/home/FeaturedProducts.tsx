@@ -38,7 +38,7 @@ export function FeaturedProducts() {
         {/* Horizontal scroll strip */}
         <div
           ref={scrollRef}
-          className="flex gap-5 overflow-x-auto py-4 -mb-4 -mx-4 px-4 snap-x snap-mandatory scroll-smooth"
+          className="flex gap-5 overflow-x-auto pt-4 pb-12 -mb-8 -mx-4 px-4 snap-x snap-mandatory scroll-smooth"
           style={{ scrollbarWidth: "none" }}
         >
           {FEATURED.map((product, i) => (
