@@ -211,24 +211,21 @@ export function Navbar() {
           {primaryLinks.map((link) => {
             if (link.hasDropdown) {
               return (
-                <button
+                <Link
                   key={link.href}
+                  href={link.href}
                   onMouseMove={openMega}
                   onMouseEnter={cancelCloseMega}
                   onMouseLeave={closeMegaSoon}
-                  onClick={() => {
-                    cancelCloseMega();
-                    setMegaOpen((v) => !v);
-                  }}
                   aria-expanded={megaOpen}
                   className={cn(
                     "relative px-4 py-2 text-sm font-medium text-black transition-colors hover:text-accent group",
-                    megaOpen && "text-accent"
+                    (megaOpen || pathname === link.href) && "text-accent"
                   )}
                 >
                   {link.label} +
                   <span className="absolute bottom-1 left-4 right-4 h-[2px] w-0 bg-accent transition-all duration-300 group-hover:w-[calc(100%-32px)]" />
-                </button>
+                </Link>
               );
             }
             return (
