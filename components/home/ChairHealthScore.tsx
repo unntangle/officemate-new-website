@@ -11,56 +11,20 @@ import {
   FLAGSHIP_SCORED_SLUG,
   overallScore,
   starRating,
-  type MetricKey,
 } from "@/constants/healthScore";
 import { PRODUCT_IMAGES, getProduct } from "@/constants/products";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Reveal } from "@/components/common/Reveal";
 import { EASE } from "@/lib/motion";
 
-/* A colour per dimension, drawn from the ergonomics palette, so the six
-   measures read as distinct rather than one long grey list. Written as full
-   class literals so Tailwind picks them up. */
-const METRIC_STYLE: Record<
-  MetricKey,
-  { fill: string; track: string; dot: string; chip: string }
-> = {
-  longSitting: {
-    fill: "bg-accent",
-    track: "bg-accent/10",
-    dot: "bg-accent",
-    chip: "bg-accent-soft text-accent",
-  },
-  lumbar: {
-    fill: "bg-sage",
-    track: "bg-sage/10",
-    dot: "bg-sage",
-    chip: "bg-sage-soft text-sage-ink",
-  },
-  posture: {
-    fill: "bg-azure",
-    track: "bg-azure/10",
-    dot: "bg-azure",
-    chip: "bg-azure-soft text-azure-ink",
-  },
-  neck: {
-    fill: "bg-honey",
-    track: "bg-honey/10",
-    dot: "bg-honey",
-    chip: "bg-honey-soft text-honey-ink",
-  },
-  breathability: {
-    fill: "bg-lilac",
-    track: "bg-lilac/10",
-    dot: "bg-lilac",
-    chip: "bg-lilac-soft text-lilac-ink",
-  },
-  productivity: {
-    fill: "bg-walnut",
-    track: "bg-walnut/10",
-    dot: "bg-walnut",
-    chip: "bg-walnut/10 text-walnut",
-  },
+/* One restrained, monochrome treatment for every parameter. The coloured dial
+   is the single accent; the bars stay neutral so the panel reads calm rather
+   than rainbow. Full class literals so Tailwind picks them up. */
+const BAR = {
+  fill: "bg-ink",
+  track: "bg-line",
+  dot: "bg-ink/60",
+  chip: "bg-surface text-muted",
 };
 
 /* Ease the overall figure up from zero once the dial scrolls into view. */
@@ -100,8 +64,8 @@ export function ChairHealthScore() {
 
   if (!product || !scores || !overall) return null;
 
-  /* Dial geometry — a full ring, filled to score/10. */
-  const R = 82;
+  /* Compact dial geometry — a full ring, filled to score/10. */
+  const R = 42;
   const C = 2 * Math.PI * R;
   const fraction = overall / 10;
 
@@ -125,94 +89,102 @@ export function ChairHealthScore() {
               {/* soft colour bloom */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-gradient-to-br from-accent/10 to-transparent blur-3xl"
+                className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-gradient-to-br from-green-500/10 to-transparent blur-3xl"
               />
 
               <div className="relative flex items-start justify-between gap-3">
                 <div>
-                  <span className="eyebrow text-walnut">{product.name}</span>
+                  <span className="eyebrow text-muted">{product.name}</span>
                   <p className="mt-1 text-sm text-muted">
                     Overall Chair Health Score
                   </p>
                 </div>
-                <span className="shrink-0 rounded-full bg-card px-3 py-1 text-[0.62rem] font-bold uppercase tracking-wide text-muted ring-1 ring-line">
-                  6 parameters
-                </span>
-              </div>
-
-              {/* The dial */}
-              <div className="relative mx-auto mt-6 grid place-items-center">
-                <svg viewBox="0 0 200 200" className="h-52 w-52 -rotate-90">
-                  <defs>
-                    <linearGradient id="score-arc" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#C62828" />
-                      <stop offset="100%" stopColor="#F2704E" />
-                    </linearGradient>
-                  </defs>
-                  <circle
-                    cx="100"
-                    cy="100"
-                    r={R}
-                    fill="none"
-                    stroke="#EFE7DA"
-                    strokeWidth="13"
-                  />
-                  <motion.circle
-                    cx="100"
-                    cy="100"
-                    r={R}
-                    fill="none"
-                    stroke="url(#score-arc)"
-                    strokeWidth="13"
-                    strokeLinecap="round"
-                    strokeDasharray={C}
-                    initial={reduce ? undefined : { strokeDashoffset: C }}
-                    whileInView={{ strokeDashoffset: C * (1 - fraction) }}
+                {/* Compact score dial */}
+                <div className="relative h-20 w-20 shrink-0">
+                  <motion.div
+                    className="h-20 w-20"
+                    initial={reduce ? false : { rotate: -360 }}
+                    whileInView={{ rotate: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1.1, ease: EASE }}
-                  />
-                </svg>
-
-                {/* upright centre readout (sibling of the rotated svg) */}
-                <div className="absolute inset-0 grid place-items-center text-center">
-                  <div>
-                    <div className="flex items-baseline justify-center gap-1">
-                      <span className="display text-6xl font-semibold leading-none tracking-tightest text-ink tabular-nums">
-                        {shown.toFixed(1)}
-                      </span>
-                      <span className="display text-lg font-medium text-muted">
-                        /10
-                      </span>
-                    </div>
-                    <div
-                      className="mt-2 flex justify-center gap-1"
-                      aria-label={`${stars} out of 5 stars`}
-                    >
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          size={14}
-                          className={
-                            i < stars
-                              ? "fill-accent text-accent"
-                              : "text-line"
-                          }
-                        />
-                      ))}
+                    transition={{ duration: 1.2, ease: EASE }}
+                  >
+                    <svg viewBox="0 0 100 100" className="h-20 w-20 -rotate-90">
+                    <defs>
+                      <linearGradient id="score-arc" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#15803D" />
+                        <stop offset="100%" stopColor="#4ADE80" />
+                      </linearGradient>
+                    </defs>
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r={R}
+                      fill="none"
+                      stroke="#EFE7DA"
+                      strokeWidth="8"
+                    />
+                    <motion.circle
+                      cx="50"
+                      cy="50"
+                      r={R}
+                      fill="none"
+                      stroke="url(#score-arc)"
+                      strokeWidth="8"
+                      strokeLinecap="round"
+                      strokeDasharray={C}
+                      initial={reduce ? undefined : { strokeDashoffset: C }}
+                      whileInView={{ strokeDashoffset: C * (1 - fraction) }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.1, ease: EASE }}
+                    />
+                  </svg>
+                  </motion.div>
+                  <div className="absolute inset-0 grid place-items-center text-center">
+                    <div>
+                      <div className="flex items-baseline justify-center gap-0.5">
+                        <span className="display text-base font-semibold leading-none tabular-nums text-ink">
+                          {shown.toFixed(1)}
+                        </span>
+                        <span className="text-[0.55rem] font-medium text-muted">
+                          /10
+                        </span>
+                      </div>
+                      <div
+                        className="mt-0.5 flex justify-center gap-px"
+                        aria-label={`${stars} out of 5 stars`}
+                      >
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star
+                            key={i}
+                            size={7}
+                            className={
+                              i < stars
+                                ? "fill-green-600 text-green-600"
+                                : "text-line"
+                            }
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Chair image */}
-              <div className="relative mt-6 h-48 overflow-hidden rounded-2xl bg-card ring-1 ring-line lg:h-52">
+              {/* Chair photo with the score dial on top — sits between the
+                  heading and the footer divider */}
+              <div className="relative mt-6 flex min-h-[18rem] flex-1 items-center justify-center overflow-hidden rounded-2xl">
                 <Image
                   src={PRODUCT_IMAGES[slug]}
                   alt={product.name}
                   fill
-                  sizes="(max-width: 1024px) 90vw, 380px"
-                  className="object-contain p-3"
+                  sizes="(max-width: 1024px) 90vw, 420px"
+                  className="pointer-events-none object-cover"
                 />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-b from-cream/70 via-transparent to-cream/70"
+                />
+
               </div>
 
               <div className="relative mt-6 flex items-center justify-between gap-3 border-t border-line pt-5">
@@ -246,7 +218,7 @@ export function ChairHealthScore() {
               <div className="flex flex-col">
                 {HEALTH_METRICS.map((metric, i) => {
                   const value = scores[metric.key];
-                  const s = METRIC_STYLE[metric.key];
+                  const s = BAR;
                   return (
                     <div
                       key={metric.key}
