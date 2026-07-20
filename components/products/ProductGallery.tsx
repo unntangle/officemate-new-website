@@ -147,7 +147,7 @@ export function ProductGallery({
 
         {/* Main shot — click to preview. Square, sized from the viewport
            height, so the frame is exactly as wide as the shot inside it. */}
-        <div className="group relative aspect-square w-full flex-1 overflow-hidden rounded-xl bg-surface lg:h-[min(calc(100vh-9rem),52rem)] lg:w-auto lg:flex-none">
+        <div className="group relative aspect-square w-full flex-1 overflow-hidden rounded-xl border border-line bg-surface lg:h-[min(calc(100vh-9rem),52rem)] lg:w-auto lg:flex-none">
           <button
             onClick={() => setPreview(true)}
             aria-label={`Preview ${name}`}
@@ -190,14 +190,14 @@ export function ProductGallery({
               <button
                 onClick={() => step(-1)}
                 aria-label="Previous view"
-                className="absolute left-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-ink opacity-0 shadow-soft backdrop-blur transition-opacity duration-300 hover:bg-white group-hover:opacity-100"
+                className="absolute left-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-ink shadow-soft backdrop-blur transition-colors duration-300 hover:bg-white"
               >
                 <ChevronLeft size={18} />
               </button>
               <button
                 onClick={() => step(1)}
                 aria-label="Next view"
-                className="absolute right-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-ink opacity-0 shadow-soft backdrop-blur transition-opacity duration-300 hover:bg-white group-hover:opacity-100"
+                className="absolute right-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-ink shadow-soft backdrop-blur transition-colors duration-300 hover:bg-white"
               >
                 <ChevronRight size={18} />
               </button>

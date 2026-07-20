@@ -69,13 +69,13 @@ export function ProductHighlights({
               key={i}
               className="w-[280px] shrink-0 snap-start sm:w-[340px]"
             >
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-surface">
+              <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-surface">
                 <Image
                   src={it.image}
                   alt={it.title || "Product highlight"}
                   fill
                   sizes="340px"
-                  className="object-contain"
+                  className="object-cover"
                 />
               </div>
               {(it.title || it.description) && (

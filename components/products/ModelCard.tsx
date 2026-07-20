@@ -90,6 +90,7 @@ export function ModelCard({ model }: { model: ChairModel }) {
             product={model.name}
             size="sm"
             variant="outline"
+            label="Enquire"
             className={hasPage ? "flex-1" : "w-full"}
           />
         </div>

@@ -9,23 +9,26 @@ import {
   FileText,
   Play,
   ArrowRight,
+  ArrowUpRight,
   Ruler,
   Layers,
   Wind,
-  Phone,
 } from "lucide-react";
-import { PRODUCTS, getProduct, getRelated, galleryFor, panelsFor } from "@/constants/products";
+import { PRODUCTS, getProduct, galleryFor, panelsFor } from "@/constants/products";
 import { categoryName } from "@/constants/categories";
+import { CHAIR_MODELS } from "@/constants/chairs";
 import { SITE } from "@/constants/site";
 import { Reveal } from "@/components/common/Reveal";
 import { Accordion } from "@/components/common/Accordion";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { EnquireButton } from "@/components/common/EnquireButton";
-import { ProductCard } from "@/components/products/ProductCard";
+import { Button } from "@/components/ui/button";
+import { ModelCard } from "@/components/products/ModelCard";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductHighlights } from "@/components/products/ProductHighlights";
 import { ColorProvider } from "@/components/products/ColorProvider";
 import { ColorPicker } from "@/components/products/ColorPicker";
+import { Configurator } from "@/components/products/Configurator";
 import { StickyEnquiry } from "@/components/products/StickyEnquiry";
 
 export function generateStaticParams() {
@@ -70,9 +73,10 @@ export default async function ProductDetailPage({
   const product = getProduct(slug);
   if (!product) notFound();
 
-  const related = getRelated(product.relatedSlugs).filter(
-    (p) => p.slug !== product.slug
-  );
+  /* Related — real Officemate models, photographed ones first, never demo data. */
+  const relatedModels = CHAIR_MODELS.filter((m) => m.slug !== product.slug)
+    .sort((a, b) => Number(Boolean(b.image)) - Number(Boolean(a.image)))
+    .slice(0, 4);
 
   /* Product Highlights — prefer the product's annotated feature panels (which
      carry their own captions), and fall back to feature text paired with
@@ -161,15 +165,20 @@ export default async function ProductDetailPage({
             {/* Colours */}
             <ColorPicker />
 
+            {/* Configuration */}
+            <Configurator />
+
             {/* CTA */}
             <div className="mt-6">
-              <EnquireButton
-                product={product.name}
-                variant="accent"
-                size="lg"
-                withArrow
-                className="w-full hover:shadow-none"
-              />
+              <Button asChild variant="accent" size="lg" className="group w-full">
+                <Link href="/contact">
+                  Visit Experience Centre
+                  <ArrowUpRight
+                    size={16}
+                    className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </Link>
+              </Button>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 <EnquireButton
                   product={`${product.name} — book a demo`}
@@ -177,13 +186,12 @@ export default async function ProductDetailPage({
                   size="lg"
                   label="Live demo"
                 />
-                <a
-                  href={`tel:${SITE.phone.replace(/\s/g, "")}`}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line text-sm font-semibold text-ink transition-colors hover:border-ink"
-                >
-                  <Phone size={16} />
-                  Connect now
-                </a>
+                <EnquireButton
+                  product={product.name}
+                  variant="outline"
+                  size="lg"
+                  label="Enquire now"
+                />
               </div>
             </div>
 
@@ -429,7 +437,7 @@ export default async function ProductDetailPage({
       </section>
 
       {/* Related */}
-      {related.length > 0 && (
+      {relatedModels.length > 0 && (
         <section className="section pt-0">
           <div className="container">
             <div className="flex items-end justify-between gap-6">
@@ -441,9 +449,9 @@ export default async function ProductDetailPage({
                 All products <ArrowRight size={15} />
               </Link>
             </div>
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((p) => (
-                <ProductCard key={p.slug} product={p} />
+            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {relatedModels.map((m) => (
+                <ModelCard key={m.slug} model={m} />
               ))}
             </div>
           </div>
